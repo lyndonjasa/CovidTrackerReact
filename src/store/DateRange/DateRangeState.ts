@@ -10,8 +10,8 @@ export const initialState: DateRangeState = {
   dateRange: {
     endDate: moment().endOf('day').toDate(),
     startDate: moment().subtract(7, 'days').startOf('day').toDate(),
-    range: LAST_SEVEN_DAYS,
+    range: LAST_SEVEN_DAYS.range,
     display: moment().subtract(7, 'days').startOf('day').format('MM/DD/yyyy') + ' - ' + moment().endOf('day').format('MM/DD/yyyy'),
-    icon: '7'
+    icon: LAST_SEVEN_DAYS.icon
   }
 }

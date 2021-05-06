@@ -1,7 +1,7 @@
 import { DateRangeState } from './../store/DateRange/DateRangeState';
 import { useDispatch, useSelector } from "react-redux";
 import { DateRange } from '../store/DateRange/DateRange';
-import { setToLastSevenDays, setToToday } from '../store/DateRange/DateRangeActions';
+import * as actions from '../store/DateRange/DateRangeActions';
 
 const useDateRange = () => {
   const currentDateRange = useSelector<DateRangeState>(
@@ -11,17 +11,22 @@ const useDateRange = () => {
   const dispatch = useDispatch();
 
   const lastSevenDays = () => {
-    dispatch(setToLastSevenDays());
+    dispatch(actions.setToLastSevenDays());
   }
 
   const today = () => {
-    dispatch(setToToday())
+    dispatch(actions.setToToday())
+  }
+  
+  const allTime = () => {
+    dispatch(actions.setToAllTime())
   }
 
   return {
     currentDateRange,
     lastSevenDays,
-    today
+    today,
+    allTime
   };
 }
 

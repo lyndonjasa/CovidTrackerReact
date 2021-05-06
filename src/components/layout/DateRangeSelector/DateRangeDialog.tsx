@@ -2,6 +2,7 @@ import { Dialog, DialogTitle, makeStyles } from "@material-ui/core";
 import React from "react";
 import useDateRange from "../../../hooks/useDateRange";
 import DateRangeButton from "./DateRangeButton";
+import * as ranges from '../../../shared/date-range';
 import './DateRangeDialog.scss';
 
 type Props = {
@@ -24,51 +25,54 @@ const useStyles = makeStyles({
 
 const DateRangeDialog: React.FC<Props> = (props: Props) => {
   const { open, handleCloseDialog } = props;
-  const { lastSevenDays, today, currentDateRange } = useDateRange();
+  const { lastSevenDays, today, allTime, currentDateRange } = useDateRange();
   const classes = useStyles();
 
   const buttons: DateButtons[] = [
     {
-      icon: '7',
+      icon: ranges.LAST_SEVEN_DAYS.icon,
       text: 'Last 7 Days',
       handleClick: () => {
         lastSevenDays();
         handleCloseDialog();
       },
-      selected: currentDateRange.icon === '7'
+      selected: currentDateRange.icon === ranges.LAST_SEVEN_DAYS.icon
     },
     {
-      icon: '&infin;',
+      icon: ranges.ALL_TIME.icon,
       text: 'All Time',
-      handleClick: () => {},
-      selected: currentDateRange.icon === '&infin;'
+      handleClick: () => {
+        allTime();
+        handleCloseDialog();
+      },
+      selected: currentDateRange.icon === ranges.ALL_TIME.icon
     },
     {
-      icon: 'T',
+      icon: ranges.TODAY.icon,
       text: 'Today',
       handleClick: () => {
         today();
         handleCloseDialog();
       },
-      selected: currentDateRange.icon === 'T'
+      selected: currentDateRange.icon === ranges.TODAY.icon
     },
     {
-      icon: 'M',
+      icon: ranges.MONTH.icon,
       text: 'Month',
       handleClick: () => {},
-      selected: currentDateRange.icon === 'M'
+      selected: currentDateRange.icon === ranges.MONTH.icon
     },
     {
-      icon: 'Y',
+      icon: ranges.YEAR.icon,
       text: 'Year',
       handleClick: () => {},
-      selected: currentDateRange.icon === 'Y'
+      selected: currentDateRange.icon === ranges.YEAR.icon
     },
     {
-      icon: 'S',
+      icon: ranges.CUSTOM_DATE.icon,
       text: 'Select Date',
       handleClick: () => {},
-      selected: currentDateRange.icon === 'S'
+      selected: currentDateRange.icon === ranges.CUSTOM_DATE.icon
     }
   ];
   
