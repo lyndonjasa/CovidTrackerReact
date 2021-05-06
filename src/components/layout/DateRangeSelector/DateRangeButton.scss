@@ -17,7 +17,7 @@
         background-color: #7083e5;
     }
 
-    &.selected {
+    &.active, &:active {
         color: white;
         background-color: #3F51B5;
     }
@@ -30,9 +30,5 @@
         margin: 0 5px;
         font-size: 12px;
         font-weight: bold;
-    }
-
-    .date-range-text {
-        padding-top: 2px;
     }
 }
