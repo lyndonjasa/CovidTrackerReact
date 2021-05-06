@@ -1,9 +1,20 @@
+import { VisitedPlacesResponse } from './messages/VisitedPlacesResponse';
+import axios, { AxiosResponse } from 'axios';
 import { CovidDataModel } from './../models/CovidDataModel';
+import { plainToClass } from 'class-transformer';
 
-export const getPlaces = (): CovidDataModel[] => {
-  return [];
+const url = 'http://localhost:5000/api/visited-places'; // place this in config file
+
+export const getPlaces = async (): Promise<CovidDataModel[]> => {
+  const promise: AxiosResponse<any[]> = await axios.get(url);
+  const response: VisitedPlacesResponse[] = plainToClass(VisitedPlacesResponse, promise.data);
+  
+  return response.map(r => new CovidDataModel(r._id, r.place, r.date, r.hours, r.isCrowded));
 }
 
-export const getPlace = (id: string): CovidDataModel => {
-  return new CovidDataModel('', new Date(), 0, true);
+export const getPlace = async (id: string): Promise<CovidDataModel> => {
+  const promise: AxiosResponse<any> = await axios.get(`${url}/${id}`);
+  const response: VisitedPlacesResponse = plainToClass(VisitedPlacesResponse, promise.data);
+
+  return new CovidDataModel(response._id, response.place, response.date, response.hours, response.isCrowded);
 }
