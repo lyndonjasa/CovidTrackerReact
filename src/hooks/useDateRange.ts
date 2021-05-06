@@ -22,11 +22,26 @@ const useDateRange = () => {
     dispatch(actions.setToAllTime())
   }
 
+  const month = (date: Date) => {
+    dispatch(actions.setToMonth(date));
+  }
+
+  const year = (date: Date) => {
+    dispatch(actions.setToYear(date));
+  }
+
+  const customDate = (date: Date) => {
+    dispatch(actions.setCustomDate(date));
+  }
+
   return {
     currentDateRange,
     lastSevenDays,
     today,
-    allTime
+    allTime,
+    month,
+    year,
+    customDate
   };
 }
 
