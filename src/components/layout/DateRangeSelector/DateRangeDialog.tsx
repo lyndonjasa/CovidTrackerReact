@@ -13,6 +13,7 @@ type DateButtons = {
   icon: string;
   text: string;
   handleClick: () => void;
+  selected: boolean;
 };
 
 const useStyles = makeStyles({
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
 
 const DateRangeDialog: React.FC<Props> = (props: Props) => {
   const { open, handleCloseDialog } = props;
-  const { lastSevenDays, today } = useDateRange();
+  const { lastSevenDays, today, currentDateRange } = useDateRange();
   const classes = useStyles();
 
   const buttons: DateButtons[] = [
@@ -33,12 +34,14 @@ const DateRangeDialog: React.FC<Props> = (props: Props) => {
       handleClick: () => {
         lastSevenDays();
         handleCloseDialog();
-      }
+      },
+      selected: currentDateRange.icon === '7'
     },
     {
       icon: '&infin;',
       text: 'All Time',
-      handleClick: () => {}
+      handleClick: () => {},
+      selected: currentDateRange.icon === '&infin;'
     },
     {
       icon: 'T',
@@ -46,22 +49,26 @@ const DateRangeDialog: React.FC<Props> = (props: Props) => {
       handleClick: () => {
         today();
         handleCloseDialog();
-      }
+      },
+      selected: currentDateRange.icon === 'T'
     },
     {
       icon: 'M',
       text: 'Month',
-      handleClick: () => {}
+      handleClick: () => {},
+      selected: currentDateRange.icon === 'M'
     },
     {
       icon: 'Y',
       text: 'Year',
-      handleClick: () => {}
+      handleClick: () => {},
+      selected: currentDateRange.icon === 'Y'
     },
     {
       icon: 'S',
       text: 'Select Date',
-      handleClick: () => {}
+      handleClick: () => {},
+      selected: currentDateRange.icon === 'S'
     }
   ];
   
@@ -75,7 +82,7 @@ const DateRangeDialog: React.FC<Props> = (props: Props) => {
               <DateRangeButton 
                 icon={b.icon} 
                 text={b.text} 
-                selected={false}
+                selected={b.selected}
                 handleDateRangeClick={b.handleClick}
                 key={b.icon}>
               </DateRangeButton>
