@@ -1,0 +1,22 @@
+.date-selector-container {
+    display: flex;
+    background-color: #3f51b5;
+    height: 30px;
+    color: white;
+    padding-top: 5px;
+    cursor: pointer;
+    justify-content: center;
+
+    .date-selector-icon-container {
+        background-color: #cecccc;
+        color: black;
+        border-radius: 1px;
+        height: 21px;
+        width: 21px;
+        text-align: center;
+        margin: 0 5px;
+        font-size: 12px;
+        font-weight: bold;
+        padding-top: 3px;
+    }
+}

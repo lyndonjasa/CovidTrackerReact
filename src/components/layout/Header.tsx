@@ -4,7 +4,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AssessmentIcon from '@material-ui/icons/Assessment';
-import DateSelector from './DateSelector';
+import DateRangeSelector from './DateRangeSelector/DateRangeSelector';
 import React from "react";
 import './Header.scss';
 
@@ -45,7 +45,7 @@ const Header = () => {
         <BottomNavigationAction label="Visited Places" icon={<LocationOnIcon />} />
         <BottomNavigationAction label="Overview" icon={<AssessmentIcon />} />
       </BottomNavigation>
-      <DateSelector></DateSelector>
+      <DateRangeSelector></DateRangeSelector>
     </>
   )
 };

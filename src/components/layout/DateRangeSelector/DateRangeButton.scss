@@ -1,0 +1,38 @@
+.date-range-button {
+    min-width: 179.5px;
+    height: 50px;
+    padding: 10px;
+    border-bottom: 0.5px solid #d1d1d1;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:nth-child(even) {
+        border-left: 0.5px solid #d1d1d1;
+    }
+
+    &:hover {
+        color: white;
+        background-color: #7083e5;
+    }
+
+    &.selected {
+        color: white;
+        background-color: #3F51B5;
+    }
+
+    .date-range-icon {
+        background-color: #cecccc;
+        color: black;
+        border-radius: 1px;
+        padding: 5px;
+        margin: 0 5px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .date-range-text {
+        padding-top: 2px;
+    }
+}
