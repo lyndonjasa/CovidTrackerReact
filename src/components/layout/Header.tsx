@@ -7,6 +7,7 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import DateRangeSelector from './DateRangeSelector/DateRangeSelector';
 import React from "react";
 import './Header.scss';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles({
 const Header = () => {
   const classes = useStyles();
   const [navigationValue, setNavigationValue] = React.useState(0);
+  const history = useHistory();
 
   return (
     <>
@@ -40,10 +42,10 @@ const Header = () => {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction label="Dashboard" icon={<DashboardIcon />} />
-        <BottomNavigationAction label="Social Interactions" icon={<AccessibilityIcon />} />
-        <BottomNavigationAction label="Visited Places" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Overview" icon={<AssessmentIcon />} />
+        <BottomNavigationAction label="Dashboard" icon={<DashboardIcon />} onClick={() => history.push('/')} />
+        <BottomNavigationAction label="Social Interactions" icon={<AccessibilityIcon />}  onClick={() => history.push('/interactions')} />
+        <BottomNavigationAction label="Visited Places" icon={<LocationOnIcon />} onClick={() => history.push('/places')} />
+        <BottomNavigationAction label="Overview" icon={<AssessmentIcon />} onClick={() => history.push('/overview')} />
       </BottomNavigation>
       <DateRangeSelector></DateRangeSelector>
     </>
