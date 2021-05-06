@@ -4,15 +4,23 @@
     margin: 0 10px;
 
     .action-text {
-        color: gray;
+        color: 726d72;
         margin: 5px 0;
         font-size: 10px;
     }
 
     .action-count {
         margin: 5px 0;
-        color: #C51162;
+        color: #7C007C;
         font-weight: bold;
         font-size: 12px;
+    }
+
+    .MuiFab-secondary {
+        background-color: #7C007C;
+    }
+
+    .MuiFab-secondary:hover {
+        background-color: #540054;
     }
 }

@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
-    width: 500,
+    width: 600,
   }
 });
 
