@@ -4,11 +4,17 @@ import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import RoomIcon from '@material-ui/icons/Room';
 import './Dashboard.scss';
 import DonutChart from "./DonutChart";
+import { SummarizedCovidDataModel } from "../../models/SummarizedCovidDataModel";
 
 const Dashboard = () => {
   const socialInteractionTitle = 'Social Interactions'
   const visitedPlacesTitle = 'Visited Places';
   const [isInteractionsActive, setIsInteractionsActive] = useState(true);
+
+  const data: SummarizedCovidDataModel[] = [
+    { displayText: 'Not Exposed', displayValue: 12 },
+    { displayText: 'Exposed', displayValue: 7 }
+  ];
 
   return (
     <>
@@ -33,7 +39,7 @@ const Dashboard = () => {
               )
             }
           </div>
-          <DonutChart></DonutChart>
+          <DonutChart data={data}></DonutChart>
         </div>
         <ActionButton text="Add Place Exposure" count={0} icon={<RoomIcon />}></ActionButton>
       </div>

@@ -26,3 +26,18 @@
         cursor: pointer;
     }
 }
+
+.series-values {
+    position: relative;
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    bottom: 220px;
+    color: #726d72;
+
+    .series-value {
+        font-weight: bold;
+        font-size: 48px;
+        color: black;
+    }
+}
