@@ -2,7 +2,7 @@ import { Chart, Legend, PieSeries } from '@devexpress/dx-react-chart-material-ui
 import { Animation } from '@devexpress/dx-react-chart';
 import { Paper } from '@material-ui/core';
 import { seriesColors as colors } from '../../shared/chart-constants';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import './DonutChart.scss';
 import { SummarizedCovidDataModel } from '../../models/SummarizedCovidDataModel';
@@ -57,12 +57,21 @@ type Props = {
 
 const DonutChart: React.FC<Props> = (props: Props) => {
   const { data } = props;
-  const initialData = data[0];
+  // const initialData = data[0];
 
   const [chartValues, setChartValues] = useState({
-    text: initialData.displayText,
-    value: initialData.displayValue
+    text: '',
+    value: 0
   });
+
+  useEffect(() => {
+    const initialData = data[0];
+    setChartValues({
+      text: initialData.displayText,
+      value: initialData.displayValue
+    });
+  }, [data])
+
   const value = { chartValues, setChartValues };
 
   return (

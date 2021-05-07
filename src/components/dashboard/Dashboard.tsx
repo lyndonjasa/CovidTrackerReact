@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ActionButton from "./ActionButtons";
 import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import RoomIcon from '@material-ui/icons/Room';
@@ -6,6 +6,7 @@ import './Dashboard.scss';
 import DonutChart from "./DonutChart";
 import { SummarizedCovidDataModel } from "../../models/SummarizedCovidDataModel";
 import CovidDataForm from "./CovidDataForm";
+import useSocialInteraction from "../../hooks/useSocialInteraction";
 
 interface CovidFormDetails {
   title: string;
@@ -23,12 +24,44 @@ const Dashboard = () => {
     exposureDisplayText: 'Is Social Distancing Observed?'
   });
 
+  const { interactions } = useSocialInteraction();
+
+  const [summary, setSummary] = useState<SummarizedCovidDataModel[]>([
+    { displayText: 'Not Exposed', displayValue: 0 },
+    { displayText: 'Exposed', displayValue: 0 }
+  ]);
+
+  useEffect(() => {
+    setSummary([
+      {
+        displayText: 'Not Exposed',
+        displayValue: interactions.filter(i => !i.isExposed).length
+      },
+      {
+        displayText: 'Exposed',
+        displayValue: interactions.filter(i => i.isExposed).length
+      }
+    ])
+  }, [interactions])
+
   const handleAddInteractions = () => {
     setFormDetails({
       title: 'Add Social Interaction',
       nameDisplayText: 'Name',
       exposureDisplayText: 'Is Social Distancing Observed?'
     });
+
+    const interactionSummary: SummarizedCovidDataModel[] = [
+      {
+        displayText: 'Not Exposed',
+        displayValue: interactions.filter(i => !i.isExposed).length
+      },
+      {
+        displayText: 'Exposed',
+        displayValue: interactions.filter(i => i.isExposed).length
+      }
+    ];
+    setSummary(interactionSummary);
     setOpen(true);
   }
 
@@ -41,11 +74,6 @@ const Dashboard = () => {
     setOpen(true);
   }
 
-  const data: SummarizedCovidDataModel[] = [
-    { displayText: 'Not Exposed', displayValue: 12 },
-    { displayText: 'Exposed', displayValue: 7 }
-  ];
-
   const [open, setOpen] = useState(false);
 
   return (
@@ -53,7 +81,7 @@ const Dashboard = () => {
       <div className="action-buttons">
         <ActionButton text="Add Social Interactions" 
           onClick={handleAddInteractions} 
-          count={0} 
+          count={interactions.length} 
           icon={<AccessibilityIcon />}>
         </ActionButton>
         <div>
@@ -75,7 +103,7 @@ const Dashboard = () => {
               )
             }
           </div>
-          <DonutChart data={data}></DonutChart>
+          <DonutChart data={summary}></DonutChart>
         </div>
         <ActionButton text="Add Place Exposure" 
           count={0} 

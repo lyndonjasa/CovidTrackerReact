@@ -2,7 +2,7 @@ import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Fo
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import React, { useState } from "react";
 import { CovidDataModel } from "../../models/CovidDataModel";
-import './CovidFormData.scss';
+import './CovidDataForm.scss';
 
 type Props = {
   open: boolean;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.scss';
 import Dashboard from './components/dashboard/Dashboard';
@@ -6,8 +6,15 @@ import Header from './components/layout/Header';
 import Overview from './components/overview/Overview';
 import SocialInteractions from './components/social-interactions/SocialInteractions';
 import VisitedPlaces from './components/visited-places/VisitedPlaces';
+import useSocialInteraction from './hooks/useSocialInteraction';
 
 function App() {
+  const { fetchInteractions } = useSocialInteraction();
+
+  useEffect(() => {
+    fetchInteractions();
+  }, [])
+
   return (
     <div className="app-container">
       <Header></Header>
