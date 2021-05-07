@@ -31,8 +31,8 @@ export function setToToday(): CustomAction {
 
 export function setToAllTime(): CustomAction {
   const dateRange: DateRange = {
-    startDate: undefined,
-    endDate: undefined,
+    startDate: moment(new Date(0)).startOf('day').toDate(),
+    endDate: moment().endOf('day').toDate(),
     icon: ranges.ALL_TIME.icon,
     range: ranges.ALL_TIME.range,
     display: 'All Time'

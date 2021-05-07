@@ -7,6 +7,8 @@ import DonutChart from "./DonutChart";
 import { SummarizedCovidDataModel } from "../../models/SummarizedCovidDataModel";
 import CovidDataForm from "./CovidDataForm";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
+import useDateRange from "../../hooks/useDateRange";
+import moment from "moment";
 
 interface CovidFormDetails {
   title: string;
@@ -25,6 +27,7 @@ const Dashboard = () => {
   });
 
   const { interactions } = useSocialInteraction();
+  const { currentDateRange } = useDateRange();
 
   const [summary, setSummary] = useState<SummarizedCovidDataModel[]>([
     { displayText: 'Not Exposed', displayValue: 0 },
@@ -42,7 +45,7 @@ const Dashboard = () => {
         displayValue: interactions.filter(i => i.isExposed).length
       }
     ])
-  }, [interactions])
+  }, [interactions, currentDateRange])
 
   const handleAddInteractions = () => {
     setFormDetails({
