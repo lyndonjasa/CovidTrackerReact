@@ -1,6 +1,8 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import DateRangeReducer from './DateRange/DateRangeReducer';
 
+const reducers = combineReducers({ dateRangeReducer: DateRangeReducer });
+
 export default function configureState() {
-  return createStore(DateRangeReducer);
+  return createStore(reducers);
 }
