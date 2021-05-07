@@ -6,11 +6,17 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureState from './store/store';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 
 ReactDOM.render(
   <ReduxProvider store={configureState()}>
     <BrowserRouter>
-      <App />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <App />
+      </MuiPickersUtilsProvider>
     </BrowserRouter>
   </ReduxProvider>,
   document.getElementById('root')

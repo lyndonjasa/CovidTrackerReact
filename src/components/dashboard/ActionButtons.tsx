@@ -5,17 +5,18 @@ import './ActionButtons.scss';
 type Props = {
   text: string;
   count: number;
-  icon: React.ReactNode
+  icon: React.ReactNode;
+  onClick?: () => void;
 }
 
 const ActionButton: React.FC<Props> = (props: Props) => {
-  const { text, count, icon} = props;
+  const { text, count, icon, onClick} = props;
 
   return (
     <>
       <div className="action-button">
         <div className="action-text">{text}</div>
-        <Fab color="secondary">
+        <Fab color="secondary" onClick={onClick}>
           {icon}
         </Fab>
         <div className="action-count">{count}</div>

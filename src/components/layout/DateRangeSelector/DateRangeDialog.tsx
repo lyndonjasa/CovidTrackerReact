@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import useDateRange from "../../../hooks/useDateRange";
 import DateRangeButton from "./DateRangeButton";
 import * as ranges from '../../../shared/date-range';
-import DateFnsUtils from '@date-io/date-fns';
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DatePicker } from "@material-ui/pickers";
 import { DatePickerView } from '@material-ui/pickers/DatePicker/DatePicker';
 import './DateRangeDialog.scss';
 
@@ -135,16 +134,14 @@ const DateRangeDialog: React.FC<Props> = (props: Props) => {
           }
         </div>
       </Dialog>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <DatePicker 
-          open={openDatePicker} 
-          value={date}
-          views={views}
-          onChange={handleDateChange}
-          onClose={() => setOpenDatePicker(false)}
-          TextFieldComponent={() => null}>
-        </DatePicker>
-      </MuiPickersUtilsProvider>
+      <DatePicker 
+        open={openDatePicker} 
+        value={date}
+        views={views}
+        onChange={handleDateChange}
+        onClose={() => setOpenDatePicker(false)}
+        TextFieldComponent={() => null}>
+      </DatePicker>
     </>
   );
 }
