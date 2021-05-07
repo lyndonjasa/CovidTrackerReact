@@ -4,6 +4,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import SettingsIcon from '@material-ui/icons/Settings';
 import DateRangeSelector from './DateRangeSelector/DateRangeSelector';
 import React from "react";
 import './Header.scss';
@@ -27,11 +28,16 @@ const Header = () => {
           <Typography variant="h6">
             COVID Tracker Tool
           </Typography>
-          <IconButton color="inherit" className="bell-icon">
-            <Badge badgeContent={17} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <div className="action-icons">
+            <IconButton color="inherit" className="bell-icon">
+              <Badge badgeContent={17} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton color="inherit" className="gear-icon">
+              <SettingsIcon />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <BottomNavigation
