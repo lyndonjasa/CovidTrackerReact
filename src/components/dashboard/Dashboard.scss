@@ -7,11 +7,15 @@
         text-align: center;
         cursor: pointer;
 
+        .header-text {
+            font-weight: 600;
+        }
+
         .header-text:hover {
             color: gray;
         }
 
-        .header-text:hover + .header-sub-text {
+        .header-text:hover ~ .header-sub-text {
             font-weight: bold;
         }
 

@@ -30,7 +30,7 @@ const Header = () => {
           </Typography>
           <div className="action-icons">
             <IconButton color="inherit" className="bell-icon">
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={7} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
