@@ -1,0 +1,28 @@
+.chart-container {
+
+    ul.MuiList-root[name=legend-bottom] {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    
+        .legend-details {
+            display: flex;
+    
+            .legend-text {
+                color: #726d72;
+                margin: 0 5px;
+                font-size: 10px;
+            }
+        }
+    }
+
+    .not-exposed-series:hover {
+        fill: #01a009;
+        cursor: pointer;
+    }
+
+    .exposed-series:hover {
+        fill: #b20303;
+        cursor: pointer;
+    }
+}
