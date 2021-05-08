@@ -7,6 +7,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './DonutChart.scss';
 import { SummarizedCovidDataModel } from '../../models/SummarizedCovidDataModel';
 import { ChartContext } from '../../context/ChartContext';
+import { Link } from 'react-router-dom';
 
 const PointComponentOverride: React.FC<PieSeries.PointProps> = (props: PieSeries.PointProps) => {
   const { argument, value } = props;
@@ -53,12 +54,11 @@ const legendOverride: React.FC<Legend.ItemProps> = (legendProps: Legend.ItemProp
 
 type Props = {
   data: SummarizedCovidDataModel[];
+  linkPath: string;
 }
 
 const DonutChart: React.FC<Props> = (props: Props) => {
-  const { data } = props;
-  // const initialData = data[0];
-
+  const { data, linkPath } = props;
   const [chartValues, setChartValues] = useState({
     text: '',
     value: 0
@@ -71,6 +71,12 @@ const DonutChart: React.FC<Props> = (props: Props) => {
       value: initialData.displayValue
     });
   }, [data])
+
+  useEffect(() => {
+    return () => {
+      
+    }
+  })
 
   const value = { chartValues, setChartValues };
 
@@ -100,6 +106,7 @@ const DonutChart: React.FC<Props> = (props: Props) => {
         <div className="series-values">
           <div className="series-value">{chartValues.value}</div>
           <div className="series-name">{chartValues.text}</div>
+          <Link to={linkPath} className="series-link">View All</Link>
         </div>
       </ChartContext.Provider>
     </>

@@ -38,21 +38,11 @@ const Dashboard = () => {
     { displayText: 'Exposed', displayValue: 0 }
   ]);
 
-  // useEffect(() => {
-  //   setSummary([
-  //     {
-  //       displayText: 'Not Exposed',
-  //       displayValue: interactions.filter(i => !i.isExposed).length
-  //     },
-  //     {
-  //       displayText: 'Exposed',
-  //       displayValue: interactions.filter(i => i.isExposed).length
-  //     }
-  //   ])
-  // }, [interactions, currentDateRange])
+  const [redirectPath, setRedirectPath] = useState('/interactions');
 
   useEffect(() => {
     if (isInteractionsActive) {
+      setRedirectPath('/interactions');
       setSummary([
         {
           displayText: 'Not Exposed',
@@ -64,6 +54,7 @@ const Dashboard = () => {
         }
       ])
     } else {
+      setRedirectPath('/places');
       setSummary([
         {
           displayText: 'Not Exposed',
@@ -133,7 +124,7 @@ const Dashboard = () => {
               )
             }
           </div>
-          <DonutChart data={summary}></DonutChart>
+          <DonutChart data={summary} linkPath={redirectPath}></DonutChart>
         </div>
         <ActionButton text="Add Place Exposure" 
           count={places.length} 

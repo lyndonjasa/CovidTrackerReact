@@ -6,17 +6,26 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DateRangeSelector from './DateRangeSelector/DateRangeSelector';
-import React from "react";
+import React, { useEffect } from "react";
 import './Header.scss';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
 import useVisitedPlace from "../../hooks/useVisitedPlace";
 
 const Header = () => {
   const [navigationValue, setNavigationValue] = React.useState(0);
   const history = useHistory();
+  const { pathname } = useLocation();
   const { loading: interactionsLoading } = useSocialInteraction();
   const { loading: placesLoading } = useVisitedPlace();
+
+  useEffect(() => {
+    if (pathname === '/interactions') {
+      setNavigationValue(1)
+    } else if (pathname === '/places') {
+      setNavigationValue(2)
+    }
+  }, [pathname])
 
   const useStyles = makeStyles({
     root: {

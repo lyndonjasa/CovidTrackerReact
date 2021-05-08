@@ -30,14 +30,22 @@
 .series-values {
     position: relative;
     background-color: transparent;
-    width: 100%;
+    margin: 0 auto;
+    width: 100px;
     text-align: center;
-    bottom: 220px;
+    bottom: 230px;
     color: #726d72;
+    z-index: 1;
 
     .series-value {
         font-weight: bold;
-        font-size: 48px;
+        font-size: 52px;
         color: black;
+    }
+
+    .series-link {
+        color: blue;
+        cursor: pointer;
+        font-size: 12px;
     }
 }
