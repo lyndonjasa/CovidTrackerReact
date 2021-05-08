@@ -31,8 +31,6 @@ const useSocialInteraction = () => {
 
     setInteractions(filteredInteractions);
     setInteractionsOverview(summarize(filteredInteractions, getDivider(currentDateRange.range), currentDateRange.endDate));
-
-    console.log(summarize(filteredInteractions, getDivider(currentDateRange.range), currentDateRange.endDate));
   }, [totalInteractions, currentDateRange]);
   
   const fetchInteractions = () => {

@@ -12,14 +12,16 @@ type ViewMode = "interactions" | "places";
 const Overview = () => {
   const [mode, setMode] = useState<ViewMode>("interactions")
   const { interactions, interactionsOverview } = useSocialInteraction();
-  const { places } = useVisitedPlace();
+  const { places, placesOverview } = useVisitedPlace();
   const [overview, setOverview] = useState<OverviewCovidDataModel[]>([]);
   
   useEffect(() => {
-    if (!interactionsOverview) return;
-
-    setOverview(interactionsOverview);
-  }, [interactionsOverview])
+    if (mode === "interactions") {
+      setOverview(interactionsOverview);
+    } else {
+      setOverview(placesOverview);
+    }
+  }, [interactionsOverview, placesOverview, mode])
 
   return (
     <>
