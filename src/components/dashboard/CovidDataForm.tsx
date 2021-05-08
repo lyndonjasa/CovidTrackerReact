@@ -1,5 +1,6 @@
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, TextField } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { CovidDataModel } from "../../models/CovidDataModel";
 import './CovidDataForm.scss';
@@ -19,6 +20,28 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
   const [date, setDate] = useState(new Date());
   const [hours, setHours] = useState(0);
   const [exposed, setExposed] = useState(false);
+
+  const [nameError, setNameError] = useState(true);
+  const handleChangeName = (event) => {
+    setNameError(event.target.value.trim() === '')
+    setName(event.target.value);
+  }
+
+  const [dateError, setDateError] = useState(false);
+  const handleChangeDate = (event) => {
+    if (!event || moment(event).toDate() > moment().toDate()) {
+      setDateError(true);
+    } else {
+      setDateError(false);
+    }
+    setDate(event);
+  }
+
+  const [hoursError, setHoursError] = useState(true);
+  const handleChangeHours = (event) => {
+    setHoursError(+event.target.value < 1);
+    setHours(+event.target.value);
+  }
 
   const handleSave = () => {
     saveCallback(new CovidDataModel('', name, date, hours, exposed));
@@ -42,27 +65,33 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
           <div className="form-container">
             <div className="form-control">
               <TextField
+                error={nameError}
+                helperText={nameError ? `${nameDisplayText} is required` : ''}
                 value={name}
                 label={nameDisplayText}
                 type="text"
-                onChange={(event) => setName(event.target.value)}
+                onChange={handleChangeName}
               />
             </div>
             <div className="form-control">
               <KeyboardDatePicker
+                error={dateError}
+                helperText={dateError ? 'Invalid Date' : ''}
                 margin="normal"
                 label="Date"
                 format="MM/dd/yyyy"
                 value={date}
-                onChange={date => setDate(date)}
+                onChange={handleChangeDate}
               />
             </div>
             <div className="form-control">
               <TextField
+                error={hoursError}
+                helperText={hoursError ? 'Hours should be greater than 0' : ''}
                 label="Hours"
                 type="number"
                 value={hours}
-                onChange={(event) => setHours(+event.target.value)}
+                onChange={handleChangeHours}
               />
             </div>
             <div className="form-control">
@@ -84,7 +113,9 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSave} color="primary">
+          <Button
+            disabled={nameError || dateError || hoursError}
+            onClick={handleSave} color="primary">
             Save
           </Button>
         </DialogActions>
