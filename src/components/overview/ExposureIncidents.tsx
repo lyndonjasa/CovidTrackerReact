@@ -18,8 +18,18 @@ const ExposureIncidents = () => {
   return (
     <>
       <div className="exposure-incidents">
-        Total Exposure Incidents
-        <div className="exposure-count">{totalCount}</div>
+        <div className="exposure-incident">
+          Total Interaction Exposures
+          <div className="exposure-count">{interactions.filter(i => i.isExposed).length}</div>
+        </div>
+        <div className="exposure-incident">
+          Total Place Exposures
+          <div className="exposure-count">{places.filter(i => i.isExposed).length}</div>
+        </div>
+        <div className="exposure-incident">
+          Total Exposure Incidents
+          <div className="exposure-count grand-total">{totalCount}</div>
+        </div>
       </div>
     </>
   )

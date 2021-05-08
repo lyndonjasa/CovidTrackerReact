@@ -2,11 +2,21 @@
     width: 100%;
     text-align: center;
     font-size: 12px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
 
-    .exposure-count {
-        font-size: 30px;
-        color: #ff026b;
-        font-weight: 500;
+    .exposure-incident {
+        width: 200px;
+
+        .exposure-count {
+            font-size: 30px;
+            color: #ff026b;
+            font-weight: 500;
+
+            &.grand-total {
+                font-weight: bold;
+            }
+        }
     }
 }

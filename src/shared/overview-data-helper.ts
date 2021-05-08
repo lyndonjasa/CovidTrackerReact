@@ -13,6 +13,8 @@ export const getDivider = (range: string): divider => {
       return "month"
     case ranges.YEAR.range:
       return "year"
+    case ranges.ALL_TIME.range:
+      return "all"
     default:
       return "day"
   }
@@ -83,6 +85,14 @@ export const summarize = (data: CovidDataModel[],
       overview.unshift(exposure);
       
     }
+  } else {
+    const model: OverviewCovidDataModel = {
+      date: 'All Time',
+      exposed: data.filter(d => d.isExposed).length,
+      notExposed: data.filter(d => !d.isExposed).length
+    };
+
+    overview.push(model);
   }
 
   return overview;

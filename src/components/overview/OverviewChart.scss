@@ -1,3 +1,13 @@
 .chart-container {
     margin-top: 20px;
 }
+
+ul.MuiList-root[name=legend-bottom] {
+    display: flex !important;
+    justify-content: space-around !important;
+    color: #726d72;
+
+    .MuiTypography-body1 {
+        font-size: 12px !important;
+    }
+}
