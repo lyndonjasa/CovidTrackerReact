@@ -1,8 +1,10 @@
 import { CovidDataModel } from './../../models/CovidDataModel';
 import { Dispatch, Action } from "redux";
-import { getInteractions } from "../../services/SocialInteractionService";
+import { getInteractions, saveInteraction } from "../../services/SocialInteractionService";
 import * as actions from "./ActionTypes";
 import { CustomAction } from "./CustomAction";
+import { SocialInteractionPostRequest } from '../../services/messages/SocialInteractionPostRequest';
+import moment from 'moment';
 
 export function FetchInteraction() {
   return function (dispatch: Dispatch<Action>) {
@@ -12,13 +14,13 @@ export function FetchInteraction() {
   }
 }
 
-export function FetchInteractionsRequest(): Action {
+function FetchInteractionsRequest(): Action {
   return {
     type: actions.FETCH_INTERACTIONS_REQUEST
   };
 }
 
-export function FetchInteractions(interactions: CovidDataModel[]): CustomAction {
+function FetchInteractions(interactions: CovidDataModel[]): CustomAction {
   return {
     type: actions.FETCH_INTERACTIONS,
     payload: {
@@ -26,3 +28,34 @@ export function FetchInteractions(interactions: CovidDataModel[]): CustomAction 
     }
   }
 }
+
+export function PostInteraction(interaction: CovidDataModel) {
+  const request: SocialInteractionPostRequest = {
+    date: moment(interaction.date).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]'),
+    hours: interaction.hours,
+    isSocialDistancing: !interaction.isExposed,
+    name: interaction.name
+  }
+
+  return function (dispatch: Dispatch<Action>) {
+    dispatch(PostInteractionRequest());
+    saveInteraction(request)
+      .then(r => dispatch(AddInteraction(r)));
+  }
+}
+
+function PostInteractionRequest(): Action {
+  return {
+    type: actions.ADD_INTERACTIONS_REQUEST
+  }
+}
+
+function AddInteraction(interaction: CovidDataModel): CustomAction {
+  return {
+    type: actions.ADD_INTERACTION,
+    payload: {
+      interaction: interaction
+    }
+  }
+}
+

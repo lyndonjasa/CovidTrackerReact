@@ -1,3 +1,4 @@
+import { SocialInteractionPostRequest } from './messages/SocialInteractionPostRequest';
 import { SocialInteractionResponse } from './messages/SocialInteractionResponse';
 import axios, { AxiosResponse } from 'axios';
 import { CovidDataModel } from './../models/CovidDataModel';
@@ -14,6 +15,13 @@ export const getInteractions = async (): Promise<CovidDataModel[]> => {
 
 export const getInteraction = async (id: string): Promise<CovidDataModel> => {
   const promise: AxiosResponse<any> = await axios.get(url);
+  const response: SocialInteractionResponse = plainToClass(SocialInteractionResponse, promise.data);
+
+  return new CovidDataModel(response._id, response.name, response.date, response.hours, !response.isSocialDistancing);
+}
+
+export const saveInteraction = async (request: SocialInteractionPostRequest): Promise<CovidDataModel> => {
+  const promise: AxiosResponse<any> = await axios.post(url, request);
   const response: SocialInteractionResponse = plainToClass(SocialInteractionResponse, promise.data);
 
   return new CovidDataModel(response._id, response.name, response.date, response.hours, !response.isSocialDistancing);

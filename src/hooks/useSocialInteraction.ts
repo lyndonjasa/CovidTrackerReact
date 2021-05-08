@@ -1,6 +1,7 @@
+import { CovidDataModel } from './../models/CovidDataModel';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FetchInteraction } from "../store/SocialInteraction/SocialInteractionActions";
+import { FetchInteraction, PostInteraction } from "../store/SocialInteraction/SocialInteractionActions";
 import { useState } from 'react';
 import useDateRange from './useDateRange';
 import { SocialInteractionState } from '../store/SocialInteraction/SocialInteractionState';
@@ -32,10 +33,15 @@ const useSocialInteraction = () => {
     dispatch(FetchInteraction());
   }
 
+  const addInteraction = (data: CovidDataModel) => {
+    dispatch(PostInteraction(data))
+  }
+
   return {
     interactions,
     loading,
-    fetchInteractions
+    fetchInteractions,
+    addInteraction
   }
 }
 

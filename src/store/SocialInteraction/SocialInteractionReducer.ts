@@ -18,6 +18,14 @@ const reducer: Reducer<SocialInteractionState, CustomAction> =
         loading: false,
         interactions: action.payload.interactions
       }
+    case actions.ADD_INTERACTIONS_REQUEST:
+      return { ...state, loading: true }
+    case actions.ADD_INTERACTION:
+      return {
+        ...state,
+        loading: false,
+        interactions: [...state.interactions, action.payload.interaction]
+      }
     default:
       return state;
   }

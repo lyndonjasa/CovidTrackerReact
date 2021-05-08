@@ -8,8 +8,10 @@ import { SummarizedCovidDataModel } from "../../models/SummarizedCovidDataModel"
 import CovidDataForm from "./CovidDataForm";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
 import useDateRange from "../../hooks/useDateRange";
+import { CovidDataModel } from "../../models/CovidDataModel";
 
 interface CovidFormDetails {
+  type: 'Interaction' | 'Place';
   title: string;
   nameDisplayText: string;
   exposureDisplayText: string;
@@ -20,12 +22,13 @@ const Dashboard = () => {
   const visitedPlacesTitle = 'Visited Places';
   const [isInteractionsActive, setIsInteractionsActive] = useState(true);
   const [formDetails, setFormDetails] = useState<CovidFormDetails>({
+    type: 'Interaction',
     title: 'Add Social Interaction',
     nameDisplayText: 'Name',
     exposureDisplayText: 'Is Social Distancing Observed?'
   });
 
-  const { interactions } = useSocialInteraction();
+  const { interactions, addInteraction } = useSocialInteraction();
   const { currentDateRange } = useDateRange();
 
   const [summary, setSummary] = useState<SummarizedCovidDataModel[]>([
@@ -48,6 +51,7 @@ const Dashboard = () => {
 
   const handleAddInteractions = () => {
     setFormDetails({
+      type: 'Interaction',
       title: 'Add Social Interaction',
       nameDisplayText: 'Name',
       exposureDisplayText: 'Is Social Distancing Observed?'
@@ -69,6 +73,7 @@ const Dashboard = () => {
 
   const handleAddPlaces = () => {
     setFormDetails({
+      type: 'Place',
       title: 'Add Visited Place',
       nameDisplayText: 'Place',
       exposureDisplayText: 'Is the Place Crowded?'
@@ -77,6 +82,11 @@ const Dashboard = () => {
   }
 
   const [open, setOpen] = useState(false);
+  const handleSave = (data: CovidDataModel) => {
+    if (formDetails.type === "Interaction") {
+      addInteraction({ ...data, isExposed: !data.isExposed });
+    }
+  }
 
   return (
     <>
@@ -117,7 +127,7 @@ const Dashboard = () => {
           nameDisplayText={formDetails.nameDisplayText}
           exposureDisplayText={formDetails.exposureDisplayText}
           handleClose={() => setOpen(false)}
-          saveCallback={(data) => console.log(data)}>
+          saveCallback={handleSave}>
         </CovidDataForm>
       </div>
     </>

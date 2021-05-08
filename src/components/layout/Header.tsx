@@ -6,7 +6,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DateRangeSelector from './DateRangeSelector/DateRangeSelector';
-import React, { useEffect } from "react";
+import React from "react";
 import './Header.scss';
 import { useHistory } from "react-router-dom";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
@@ -15,10 +15,6 @@ const Header = () => {
   const [navigationValue, setNavigationValue] = React.useState(0);
   const history = useHistory();
   const { loading } = useSocialInteraction();
-
-  useEffect(() => {
-    console.log(loading);
-  }, [loading]);
 
   const useStyles = makeStyles({
     root: {
