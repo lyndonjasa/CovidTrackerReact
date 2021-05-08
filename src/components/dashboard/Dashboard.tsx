@@ -9,6 +9,7 @@ import CovidDataForm from "./CovidDataForm";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
 import useDateRange from "../../hooks/useDateRange";
 import { CovidDataModel } from "../../models/CovidDataModel";
+import useVisitedPlace from "../../hooks/useVisitedPlace";
 
 interface CovidFormDetails {
   type: 'Interaction' | 'Place';
@@ -29,6 +30,7 @@ const Dashboard = () => {
   });
 
   const { interactions, addInteraction } = useSocialInteraction();
+  const { places, addPlace } = useVisitedPlace();
   const { currentDateRange } = useDateRange();
 
   const [summary, setSummary] = useState<SummarizedCovidDataModel[]>([
@@ -36,18 +38,44 @@ const Dashboard = () => {
     { displayText: 'Exposed', displayValue: 0 }
   ]);
 
+  // useEffect(() => {
+  //   setSummary([
+  //     {
+  //       displayText: 'Not Exposed',
+  //       displayValue: interactions.filter(i => !i.isExposed).length
+  //     },
+  //     {
+  //       displayText: 'Exposed',
+  //       displayValue: interactions.filter(i => i.isExposed).length
+  //     }
+  //   ])
+  // }, [interactions, currentDateRange])
+
   useEffect(() => {
-    setSummary([
-      {
-        displayText: 'Not Exposed',
-        displayValue: interactions.filter(i => !i.isExposed).length
-      },
-      {
-        displayText: 'Exposed',
-        displayValue: interactions.filter(i => i.isExposed).length
-      }
-    ])
-  }, [interactions, currentDateRange])
+    if (isInteractionsActive) {
+      setSummary([
+        {
+          displayText: 'Not Exposed',
+          displayValue: interactions.filter(i => !i.isExposed).length
+        },
+        {
+          displayText: 'Exposed',
+          displayValue: interactions.filter(i => i.isExposed).length
+        }
+      ])
+    } else {
+      setSummary([
+        {
+          displayText: 'Not Exposed',
+          displayValue: places.filter(i => !i.isExposed).length
+        },
+        {
+          displayText: 'Exposed',
+          displayValue: places.filter(i => i.isExposed).length
+        }
+      ])
+    }
+  }, [isInteractionsActive, interactions, places, currentDateRange])
 
   const handleAddInteractions = () => {
     setFormDetails({
@@ -56,18 +84,6 @@ const Dashboard = () => {
       nameDisplayText: 'Name',
       exposureDisplayText: 'Is Social Distancing Observed?'
     });
-
-    const interactionSummary: SummarizedCovidDataModel[] = [
-      {
-        displayText: 'Not Exposed',
-        displayValue: interactions.filter(i => !i.isExposed).length
-      },
-      {
-        displayText: 'Exposed',
-        displayValue: interactions.filter(i => i.isExposed).length
-      }
-    ];
-    setSummary(interactionSummary);
     setOpen(true);
   }
 
@@ -85,6 +101,8 @@ const Dashboard = () => {
   const handleSave = (data: CovidDataModel) => {
     if (formDetails.type === "Interaction") {
       addInteraction({ ...data, isExposed: !data.isExposed });
+    } else {
+      addPlace(data);
     }
   }
 
@@ -118,7 +136,7 @@ const Dashboard = () => {
           <DonutChart data={summary}></DonutChart>
         </div>
         <ActionButton text="Add Place Exposure" 
-          count={0} 
+          count={places.length} 
           icon={<RoomIcon />}
           onClick={handleAddPlaces}>
         </ActionButton>

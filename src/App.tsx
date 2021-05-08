@@ -7,12 +7,15 @@ import Overview from './components/overview/Overview';
 import SocialInteractions from './components/social-interactions/SocialInteractions';
 import VisitedPlaces from './components/visited-places/VisitedPlaces';
 import useSocialInteraction from './hooks/useSocialInteraction';
+import useVisitedPlace from './hooks/useVisitedPlace';
 
 function App() {
   const { fetchInteractions } = useSocialInteraction();
+  const { fetchPlaces } = useVisitedPlace();
 
   useEffect(() => {
     fetchInteractions();
+    fetchPlaces();
   }, [])
 
   return (

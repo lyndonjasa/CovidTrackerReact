@@ -10,11 +10,13 @@ import React from "react";
 import './Header.scss';
 import { useHistory } from "react-router-dom";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
+import useVisitedPlace from "../../hooks/useVisitedPlace";
 
 const Header = () => {
   const [navigationValue, setNavigationValue] = React.useState(0);
   const history = useHistory();
-  const { loading } = useSocialInteraction();
+  const { loading: interactionsLoading } = useSocialInteraction();
+  const { loading: placesLoading } = useVisitedPlace();
 
   const useStyles = makeStyles({
     root: {
@@ -60,7 +62,7 @@ const Header = () => {
       </BottomNavigation>
       <DateRangeSelector></DateRangeSelector>
       <div className="linear-progress">
-        <LinearProgress className={loading ? '' : classes.indeterminate} />
+        <LinearProgress className={interactionsLoading || placesLoading ? '' : classes.indeterminate} />
       </div>
     </>
   )
