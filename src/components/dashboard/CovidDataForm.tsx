@@ -1,6 +1,6 @@
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, TextField } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CovidDataModel } from "../../models/CovidDataModel";
 import './CovidDataForm.scss';
 
@@ -24,6 +24,15 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
     saveCallback(new CovidDataModel('', name, date, hours, exposed));
     handleClose();
   };
+
+  useEffect(() => {
+    if (open) {
+      setName('');
+      setDate(new Date());
+      setHours(0);
+      setExposed(false);
+    }
+  }, [open])
 
   return (
     <>
