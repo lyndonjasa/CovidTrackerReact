@@ -1,0 +1,35 @@
+.view-mode-button {
+    font-size: 12px;
+    width: 150px;
+    padding: 5px 15px;
+    border: 1px solid black;
+    text-align: center;
+    cursor: pointer;
+
+    .view-mode-count {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    &.social-interaction {
+        background-color: #DFFFE7;
+        border: 1px solid #3cc45e;
+        color: #027c21;
+    }
+
+    &.social-interaction:hover, &.social-interaction.active {
+        background-color: #3cc45e;
+        color: white;
+    }
+
+    &.visited-place {
+        background-color: #f7e8ed;
+        border: 1px solid #cc285c;
+        color: #8e002d;
+    }
+
+    &.visited-place:hover, &.visited-place.active {
+        background-color: #8e002d;
+        color: white;
+    }
+}

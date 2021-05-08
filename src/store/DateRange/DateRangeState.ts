@@ -9,9 +9,9 @@ export interface DateRangeState {
 export const initialState: DateRangeState = {
   dateRange: {
     endDate: moment().endOf('day').toDate(),
-    startDate: moment().subtract(7, 'days').startOf('day').toDate(),
+    startDate: moment().subtract(6, 'days').startOf('day').toDate(),
     range: LAST_SEVEN_DAYS.range,
-    display: moment().subtract(7, 'days').startOf('day').format('MM/DD/yyyy') + ' - ' + moment().endOf('day').format('MM/DD/yyyy'),
+    display: moment().subtract(6, 'days').startOf('day').format('MM/DD/yyyy') + ' - ' + moment().endOf('day').format('MM/DD/yyyy'),
     icon: LAST_SEVEN_DAYS.icon
   }
 }

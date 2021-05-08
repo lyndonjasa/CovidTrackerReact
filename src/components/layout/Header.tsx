@@ -24,6 +24,10 @@ const Header = () => {
       setNavigationValue(1)
     } else if (pathname === '/places') {
       setNavigationValue(2)
+    } else if (pathname === '/overview') {
+      setNavigationValue(3)
+    } else {
+      setNavigationValue(0);
     }
   }, [pathname])
 
