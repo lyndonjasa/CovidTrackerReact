@@ -6,6 +6,6 @@ export interface SocialInteractionState {
 }
 
 export const initialState: SocialInteractionState = {
-  loading: false,
+  loading: true,
   interactions: []
 }

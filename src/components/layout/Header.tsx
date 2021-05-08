@@ -1,4 +1,4 @@
-import { AppBar, Badge, BottomNavigation, BottomNavigationAction, IconButton, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Badge, BottomNavigation, BottomNavigationAction, IconButton, LinearProgress, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccessibilityIcon from '@material-ui/icons/Accessibility';
@@ -6,20 +6,29 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DateRangeSelector from './DateRangeSelector/DateRangeSelector';
-import React from "react";
+import React, { useEffect } from "react";
 import './Header.scss';
 import { useHistory } from "react-router-dom";
-
-const useStyles = makeStyles({
-  root: {
-    width: 600,
-  }
-});
+import useSocialInteraction from "../../hooks/useSocialInteraction";
 
 const Header = () => {
-  const classes = useStyles();
   const [navigationValue, setNavigationValue] = React.useState(0);
   const history = useHistory();
+  const { loading } = useSocialInteraction();
+
+  useEffect(() => {
+    console.log(loading);
+  }, [loading]);
+
+  const useStyles = makeStyles({
+    root: {
+      width: 600,
+    },
+    indeterminate: {
+      display: 'none'
+    }
+  });
+  const classes = useStyles();
 
   return (
     <>
@@ -54,6 +63,9 @@ const Header = () => {
         <BottomNavigationAction label="Overview" icon={<AssessmentIcon />} onClick={() => history.push('/overview')} />
       </BottomNavigation>
       <DateRangeSelector></DateRangeSelector>
+      <div className="linear-progress">
+        <LinearProgress className={loading ? '' : classes.indeterminate} />
+      </div>
     </>
   )
 };

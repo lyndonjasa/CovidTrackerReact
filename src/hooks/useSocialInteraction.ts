@@ -1,14 +1,20 @@
 import { useEffect } from 'react';
-import { CovidDataModel } from './../models/CovidDataModel';
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchInteraction } from "../store/SocialInteraction/SocialInteractionActions";
 import { useState } from 'react';
 import useDateRange from './useDateRange';
+import { SocialInteractionState } from '../store/SocialInteraction/SocialInteractionState';
 
 const useSocialInteraction = () => {
-  const totalInteractions = useSelector<any>(
-    (state) => state.socialInteractionReducer.interactions
-  ) as CovidDataModel[];
+  const state = useSelector<any>(
+    (state) => {
+      const reducerState = state.socialInteractionReducer as SocialInteractionState;
+
+      return reducerState;
+    }
+  ) as SocialInteractionState;
+
+  const { interactions: totalInteractions, loading } = state;
 
   const dispatch = useDispatch();
 
@@ -18,7 +24,7 @@ const useSocialInteraction = () => {
   useEffect(() => {
     const filteredInteractions = totalInteractions.filter(i => new Date(i.date) >= currentDateRange.startDate &&
                                                           new Date(i.date) <= currentDateRange.endDate);
-    console.log(filteredInteractions);
+
     setInteractions(filteredInteractions);
   }, [totalInteractions, currentDateRange]);
   
@@ -28,6 +34,7 @@ const useSocialInteraction = () => {
 
   return {
     interactions,
+    loading,
     fetchInteractions
   }
 }

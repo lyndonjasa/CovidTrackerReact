@@ -8,7 +8,6 @@ import { SummarizedCovidDataModel } from "../../models/SummarizedCovidDataModel"
 import CovidDataForm from "./CovidDataForm";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
 import useDateRange from "../../hooks/useDateRange";
-import moment from "moment";
 
 interface CovidFormDetails {
   title: string;
