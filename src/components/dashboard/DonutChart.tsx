@@ -25,29 +25,8 @@ const PointComponentOverride: React.FC<PieSeries.PointProps> = (props: PieSeries
       <PieSeries.Point
         {...props}
         onClick={handleSeriesClick}
-        color={`${argument === 'Exposed' ? colors.EXPOSED : colors.NOT_EXPOSED}`}
         className={`${argument === 'Exposed' ? 'exposed-series' : 'not-exposed-series' }`}
       />
-    </>
-  )
-}
-
-const legendOverride: React.FC<Legend.ItemProps> = (legendProps: Legend.ItemProps) => {
-  const { children }: any = legendProps;
-  const displayText = children[1].props.text;
-
-  const color = displayText === 'Exposed' ? colors.EXPOSED : colors.NOT_EXPOSED;
-
-  return (
-    <>
-      <li className="legend-details">
-        <svg fill={color} width="10" height="10" name={displayText}>
-          <circle r="5" cx="5" cy="5" name={displayText}></circle>
-        </svg>
-        <span className="legend-text">
-          {displayText}
-        </span>
-      </li>
     </>
   )
 }
@@ -98,7 +77,7 @@ const DonutChart: React.FC<Props> = (props: Props) => {
                 pointComponent={PointComponentOverride}
               />
 
-              <Legend position="bottom" itemComponent={legendOverride} />
+              <Legend position="bottom"  />
               <Animation />
             </Chart>
           </Paper>
