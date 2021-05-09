@@ -4,7 +4,6 @@ import { getInteractions, saveInteraction } from "../../services/SocialInteracti
 import * as actions from "./ActionTypes";
 import { CustomAction } from "./CustomAction";
 import { SocialInteractionPostRequest } from '../../services/messages/SocialInteractionPostRequest';
-import moment from 'moment';
 
 export function FetchInteraction() {
   return function (dispatch: Dispatch<Action>) {
@@ -31,11 +30,13 @@ function FetchInteractions(interactions: CovidDataModel[]): CustomAction {
 
 export function PostInteraction(interaction: CovidDataModel) {
   const request: SocialInteractionPostRequest = {
-    date: moment(interaction.date).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]'),
+    date: interaction.date,
     hours: interaction.hours,
     isSocialDistancing: !interaction.isExposed,
     name: interaction.name
   }
+
+  console.log(request);
 
   return function (dispatch: Dispatch<Action>) {
     dispatch(PostInteractionRequest());

@@ -5,7 +5,7 @@ import RoomIcon from '@material-ui/icons/Room';
 import './Dashboard.scss';
 import DonutChart from "./DonutChart";
 import { SummarizedCovidDataModel } from "../../models/SummarizedCovidDataModel";
-import CovidDataForm from "./CovidDataForm";
+import CovidDataForm from "../shared/CovidDataForm";
 import useSocialInteraction from "../../hooks/useSocialInteraction";
 import useDateRange from "../../hooks/useDateRange";
 import { CovidDataModel } from "../../models/CovidDataModel";

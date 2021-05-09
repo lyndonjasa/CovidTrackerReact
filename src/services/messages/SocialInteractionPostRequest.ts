@@ -1,6 +1,6 @@
 export class SocialInteractionPostRequest {
   name: string;
-  date: string;
+  date: Date;
   hours: number;
   isSocialDistancing: boolean;
 }

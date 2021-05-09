@@ -12,16 +12,26 @@ type Props = {
   nameDisplayText: string;
   exposureDisplayText: string;
   saveCallback: (data: CovidDataModel) => void;
+  initialValue?: CovidDataModel;
 }
 
 const CovidDataForm: React.FC<Props> = (props: Props) => {
-  const { open, dialogTitle, handleClose, saveCallback, nameDisplayText, exposureDisplayText } = props;
+  const { 
+    open, 
+    dialogTitle, 
+    handleClose, 
+    saveCallback, 
+    nameDisplayText, 
+    exposureDisplayText,
+    initialValue
+  } = props;
+
   const [name, setName] = useState('');
   const [date, setDate] = useState(new Date());
   const [hours, setHours] = useState(0);
   const [exposed, setExposed] = useState(false);
 
-  const [nameError, setNameError] = useState(true);
+  const [nameError, setNameError] = useState(false);
   const handleChangeName = (event) => {
     setNameError(event.target.value.trim() === '')
     setName(event.target.value);
@@ -37,7 +47,7 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
     setDate(event);
   }
 
-  const [hoursError, setHoursError] = useState(true);
+  const [hoursError, setHoursError] = useState(false);
   const handleChangeHours = (event) => {
     setHoursError(+event.target.value < 1);
     setHours(+event.target.value);
@@ -50,16 +60,27 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (open) {
-      setName('');
-      setDate(new Date());
-      setHours(0);
-      setExposed(false);
+      if (initialValue) {
+        setName(initialValue.name);
+        setDate(initialValue.date);
+        setHours(initialValue.hours);
+        setExposed(initialValue.isExposed);
+      } else {
+        setName('');
+        setDate(new Date());
+        setHours(0);
+        setExposed(false);
+      }
+
+      setNameError(false);
+      setHoursError(false);
+      setDateError(false);
     }
   }, [open])
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose} disableBackdropClick={true} >
+      <Dialog open={open} onClose={handleClose} disableBackdropClick={true} scroll="body" >
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
           <div className="form-container">
@@ -114,7 +135,7 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
             Cancel
           </Button>
           <Button
-            disabled={nameError || dateError || hoursError}
+            disabled={nameError || dateError || hoursError || name.trim() === '' || hours < 1}
             onClick={handleSave} color="primary">
             Save
           </Button>
