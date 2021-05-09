@@ -1,5 +1,6 @@
 import { makeStyles, TableCell } from "@material-ui/core";
 import { TableRow } from "@material-ui/core";
+import moment from "moment";
 import React from "react";
 import './CovidDataRowGroupHeader.scss';
 
@@ -19,19 +20,25 @@ const useHeaderCellStyles = makeStyles({
   }
 })
 
-const CovidDataRowGroupHeader = () => {
+type Props = {
+  headerDate: Date
+}
+
+const CovidDataRowGroupHeader: React.FC<Props> = (props: Props) => {
   const headerRowClasses = useHeaderRowStyles();
   const headerCellClasses = useHeaderCellStyles();
+
+  const { headerDate } = props;
 
   return (
     <>
       <TableRow className={headerRowClasses.root}>
         <TableCell className={headerCellClasses.root} colSpan={4}>
           <div className="header-date">
-            <div className="date-part">09</div>
+            <div className="date-part">{ moment(headerDate).format('DD') }</div>
             <div className="other-part">
-              <div className="day-part">Sunday</div>
-              <div className="month-year-part">May 2021</div>
+              <div className="day-part">{ moment(headerDate).format('dddd') }</div>
+              <div className="month-year-part">{ moment(headerDate).format('MMM yyyy') }</div>
             </div>
           </div>
         </TableCell>

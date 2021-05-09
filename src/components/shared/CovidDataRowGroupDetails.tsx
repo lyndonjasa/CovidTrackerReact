@@ -3,7 +3,7 @@ import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './CovidDataRowGroupDetails.scss';
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
+import { CovidDataModel } from '../../models/CovidDataModel';
 
 const useActionStyles = makeStyles({
   root: {
@@ -13,14 +13,18 @@ const useActionStyles = makeStyles({
 
 const useRowStyles = makeStyles({
   root: {
-    height: '100px',
     verticalAlign: 'top'
   }
 })
 
-const CovidDataRowGroupDetails = () => {
+type Props = {
+  detail: CovidDataModel;
+}
+
+const CovidDataRowGroupDetails: React.FC<Props> = (props: Props) => {
   const actionClasses = useActionStyles();
   const rowClasses = useRowStyles();
+  const { detail } = props;
 
   const iconStyles: React.CSSProperties = {
     width: '80px'
@@ -43,23 +47,23 @@ const CovidDataRowGroupDetails = () => {
       <TableRow className={rowClasses.root}>
         <TableCell style={iconStyles}>
           <div className="exposure-icon">
-            <Fab color="primary"
+            <Fab color={ detail.isExposed ? 'secondary' : 'primary' }
             size="small"
             aria-label="add" 
             disableRipple={true}
             disableFocusRipple={true}>&nbsp;</Fab>
             <div className="exposure-text">
-              Not Exposed
+              { detail.isExposed ? 'Exposed' : 'Not Exposed' }
             </div>
           </div>
         </TableCell>
         <TableCell style={nameStyles}>
           <div className="detail-header">Name</div>
-          <div className="detail-content">Don's Place</div>
+          <div className="detail-content">{ detail.name  }</div>
         </TableCell>
         <TableCell style={hourStyles}>
           <div className="detail-header">Hours Spent</div>
-          <div className="detail-content">3</div>
+          <div className="detail-content">{ detail.hours }</div>
         </TableCell>
         <TableCell style={actionStyles}>
           <div className="detail-actions">

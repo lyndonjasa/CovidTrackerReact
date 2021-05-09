@@ -76,7 +76,7 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
       setHoursError(false);
       setDateError(false);
     }
-  }, [open])
+  }, [open, initialValue])
 
   return (
     <>
