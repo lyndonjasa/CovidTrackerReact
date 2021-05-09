@@ -1,9 +1,10 @@
 import React from "react";
+import CovidDataTable from "../shared/CovidDataTable";
 
 const SocialInteractions = () => {
   return (
     <>
-      Social Interactions component
+      <CovidDataTable></CovidDataTable>
     </>
   )
 }

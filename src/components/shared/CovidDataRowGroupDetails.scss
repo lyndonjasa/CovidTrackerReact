@@ -1,0 +1,33 @@
+.exposure-icon {
+    width: 60px;
+    text-align: center;
+    margin-left: 15px;
+
+    .exposure-text {
+        margin-top: 5px;
+        font-size: 10px;
+        color: #757575;
+    }
+}
+
+.detail-header, .detail-content {
+    text-align: center;
+}
+
+.detail-header {
+    color: #757575;
+    font-size: 10px;
+}
+
+.detail-content {
+    font-size: 20px;
+    min-height: 40px;
+}
+
+.detail-actions {
+    display: flex;
+
+    > * {
+        margin: 5px;
+    }
+}

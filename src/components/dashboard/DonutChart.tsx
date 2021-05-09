@@ -1,7 +1,6 @@
 import { Chart, Legend, PieSeries } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
 import { Paper } from '@material-ui/core';
-import { seriesColors as colors } from '../../shared/chart-constants';
 import React, { useContext, useEffect, useState } from 'react';
 
 import './DonutChart.scss';
