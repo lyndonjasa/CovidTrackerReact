@@ -3,7 +3,7 @@ import { CovidDataModel } from './../models/CovidDataModel';
 import moment from 'moment';
 import * as ranges from './date-range';
 
-export type divider = "day" | "week" | "month" | "year" | "all";
+export type divider = "day" | "week" | "month" | "year" | "twoWeeks";
 
 export const getDivider = (range: string): divider => {
   switch (range) {
@@ -14,7 +14,7 @@ export const getDivider = (range: string): divider => {
     case ranges.YEAR.range:
       return "year"
     case ranges.ALL_TIME.range:
-      return "all"
+      return "twoWeeks"
     default:
       return "day"
   }
@@ -27,7 +27,7 @@ export const summarize = (data: CovidDataModel[],
 
   if (divisionUnit === "day") {
     const model: OverviewCovidDataModel = {
-      date: moment(baseDate).format('MM/DD/yyyy'),
+      date: moment(baseDate).format('MMM DD, yyyy'),
       exposed: data.filter(d => d.isExposed).length,
       notExposed: data.filter(d => !d.isExposed).length
     };
@@ -42,7 +42,7 @@ export const summarize = (data: CovidDataModel[],
       const exposures = data.filter(d => new Date(d.date) >= dayStart && new Date(d.date) <= dayEnd);
 
       const exposure: OverviewCovidDataModel = {
-        date: moment().subtract(index, "day").format('MM/DD/yyyy'),
+        date: moment().subtract(index, "day").format('MMM DD'),
         exposed: exposures.filter(e => e.isExposed).length,
         notExposed: exposures.filter(e => !e.isExposed).length
       }
@@ -86,13 +86,21 @@ export const summarize = (data: CovidDataModel[],
       
     }
   } else {
-    const model: OverviewCovidDataModel = {
-      date: 'All Time',
-      exposed: data.filter(d => d.isExposed).length,
-      notExposed: data.filter(d => !d.isExposed).length
-    };
+    // 2 weeks = 14 days
+    for (let index = 0; index < 14; index++) {
+      const dayStart = moment().subtract(index, "day").startOf('day').toDate();
+      const dayEnd = moment().subtract(index, "day").endOf('day').toDate();
 
-    overview.push(model);
+      const exposures = data.filter(d => new Date(d.date) >= dayStart && new Date(d.date) <= dayEnd);
+
+      const exposure: OverviewCovidDataModel = {
+        date: moment().subtract(index, "day").format('MM/DD'),
+        exposed: exposures.filter(e => e.isExposed).length,
+        notExposed: exposures.filter(e => !e.isExposed).length
+      }
+
+      overview.unshift(exposure);
+    }
   }
 
   return overview;

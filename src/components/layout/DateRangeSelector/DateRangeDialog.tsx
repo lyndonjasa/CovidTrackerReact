@@ -29,13 +29,13 @@ type Mode = 'Y' | 'M' | 'C';
 
 const DateRangeDialog: React.FC<Props> = (props: Props) => {
   const { open, handleCloseDialog } = props;
-  const { lastSevenDays, today, allTime, month, year, customDate, currentDateRange } = useDateRange();
+  const { lastSevenDays, today, lastTwoWeeks, month, year, customDate, currentDateRange } = useDateRange();
   const classes = useStyles();
 
   const buttons: DateButtons[] = [
     {
       icon: ranges.LAST_SEVEN_DAYS.icon,
-      text: 'Last 7 Days',
+      text: ranges.LAST_SEVEN_DAYS.range,
       handleClick: () => {
         lastSevenDays();
         handleCloseDialog();
@@ -44,16 +44,16 @@ const DateRangeDialog: React.FC<Props> = (props: Props) => {
     },
     {
       icon: ranges.ALL_TIME.icon,
-      text: 'All Time',
+      text: ranges.ALL_TIME.range,
       handleClick: () => {
-        allTime();
+        lastTwoWeeks();
         handleCloseDialog();
       },
       selected: currentDateRange.icon === ranges.ALL_TIME.icon
     },
     {
       icon: ranges.TODAY.icon,
-      text: 'Today',
+      text: ranges.TODAY.range,
       handleClick: () => {
         today();
         handleCloseDialog();
@@ -62,7 +62,7 @@ const DateRangeDialog: React.FC<Props> = (props: Props) => {
     },
     {
       icon: ranges.MONTH.icon,
-      text: 'Month',
+      text: ranges.MONTH.range,
       handleClick: () => {
         setViews(['year','month']);
         setMode('M');
@@ -72,7 +72,7 @@ const DateRangeDialog: React.FC<Props> = (props: Props) => {
     },
     {
       icon: ranges.YEAR.icon,
-      text: 'Year',
+      text: ranges.YEAR.range,
       handleClick: () => {
         setViews(['year']);
         setMode('Y')

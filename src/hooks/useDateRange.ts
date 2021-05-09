@@ -17,8 +17,8 @@ const useDateRange = () => {
     dispatch(actions.setToToday())
   }
   
-  const allTime = () => {
-    dispatch(actions.setToAllTime())
+  const lastTwoWeeks = () => {
+    dispatch(actions.setToTwoWeeks())
   }
 
   const month = (date: Date) => {
@@ -37,7 +37,7 @@ const useDateRange = () => {
     currentDateRange,
     lastSevenDays,
     today,
-    allTime,
+    lastTwoWeeks,
     month,
     year,
     customDate

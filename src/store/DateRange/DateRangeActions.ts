@@ -29,13 +29,13 @@ export function setToToday(): CustomAction {
   };
 }
 
-export function setToAllTime(): CustomAction {
+export function setToTwoWeeks(): CustomAction {
   const dateRange: DateRange = {
-    startDate: moment(new Date(0)).startOf('day').toDate(),
+    startDate: moment().subtract(13, 'days').startOf('day').toDate(),
     endDate: moment().endOf('day').toDate(),
     icon: ranges.ALL_TIME.icon,
     range: ranges.ALL_TIME.range,
-    display: 'All Time'
+    display: moment().subtract(13, 'days').startOf('day').format('MM/DD/yyyy') + ' - ' + moment().endOf('day').format('MM/DD/yyyy')
   };
 
   return {

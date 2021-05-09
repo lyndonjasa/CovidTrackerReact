@@ -4,12 +4,12 @@ interface DateRange {
 };
 
 const LAST_SEVEN_DAYS: DateRange = {
-  range: 'Last Seven Days',
+  range: 'Last 7 Days',
   icon: '7'
 };
 const ALL_TIME: DateRange = {
-  range: 'All Time',
-  icon: '&infin;'
+  range: 'Last 14 Days',
+  icon: '14'
 };
 const TODAY: DateRange = {
   range: 'Today',
