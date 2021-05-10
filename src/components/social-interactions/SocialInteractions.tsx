@@ -7,9 +7,10 @@ import CovidDataAddButton from "../shared/CovidDataAddButton";
 import CovidDataForm from "../shared/CovidDataForm";
 import { CovidDataModel } from "../../models/CovidDataModel";
 import { TableContext } from "../../context/TableContext";
+import CovidDataEmptyTable from "../shared/CovidDataEmptyTable";
 
 const SocialInteractions = () => {
-  const { interactions, addInteraction, deleteInteraction, updateInteraction } = useSocialInteraction();
+  const { interactions, addInteraction, deleteInteraction, updateInteraction, loading } = useSocialInteraction();
   const [groupedInteractions, setGroupedInteractions] = useState<GroupedCovidDataModel[]>([]);
 
   // pagination data
@@ -61,18 +62,30 @@ const SocialInteractions = () => {
   return (
     <>
       <TableContext.Provider value={{...contextValues, mode: "interaction"}}>
-      <CovidDataTable 
-        data={groupedInteractions} 
-        pagination={{
-          length,
-          rowsPerPage: take,
-          page
-        }}
-        rowsPerPageCallback={onRowsPerPageChange}
-        pageCallback={onPageChange} />
+        {
+          interactions.length > 0 &&
+          <CovidDataTable 
+            data={groupedInteractions} 
+            pagination={{
+              length,
+              rowsPerPage: take,
+              page
+            }}
+            rowsPerPageCallback={onRowsPerPageChange}
+            pageCallback={onPageChange} />
+        }
+        {
+          interactions.length <= 0 &&
+          <CovidDataEmptyTable>
+            No interaction data present yet. Click on <b>ADD INTERACTION</b> to start collecting data.
+          </CovidDataEmptyTable>
+        }
       </TableContext.Provider>
-      <CovidDataAddButton addDisplayText="Add Interaction"
-        onAddClick={() => setOpen(true)} />
+      {
+        !loading &&
+        <CovidDataAddButton addDisplayText="Add Interaction"
+          onAddClick={() => setOpen(true)} />
+      }
       <CovidDataForm open={open}
         dialogTitle="Add Social Interaction"
         nameDisplayText="Name"
