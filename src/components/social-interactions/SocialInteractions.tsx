@@ -8,13 +8,36 @@ const SocialInteractions = () => {
   const { interactions } = useSocialInteraction();
   const [groupedInteractions, setGroupedInteractions] = useState<GroupedCovidDataModel[]>([]);
 
+  // pagination data
+  const [length, setLength] = useState(0);
+  const [page, setPage] = useState(0);
+  const [take, setTake] = useState(5);
+
+  const onRowsPerPageChange = (value: number) => {
+    setTake(value);
+  }
+
+  const onPageChange = (value: number) => {
+    setPage(value);
+  }
+
   useEffect(() => {
-    setGroupedInteractions(groupData(interactions))
-  }, [interactions])
+    setLength(interactions.length);
+    const currentPage = (page * take);
+    setGroupedInteractions(groupData(interactions.slice(currentPage, currentPage + take)))
+  }, [interactions, page, take])
 
   return (
     <>
-      <CovidDataTable data={groupedInteractions}></CovidDataTable>
+      <CovidDataTable 
+        data={groupedInteractions} 
+        pagination={{
+          length,
+          rowsPerPage: take,
+          page
+        }}
+        rowsPerPageCallback={onRowsPerPageChange}
+        pageCallback={onPageChange}></CovidDataTable>
     </>
   )
 }
