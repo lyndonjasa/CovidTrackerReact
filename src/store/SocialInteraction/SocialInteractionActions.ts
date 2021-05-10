@@ -1,6 +1,6 @@
 import { CovidDataModel } from './../../models/CovidDataModel';
 import { Dispatch, Action } from "redux";
-import { getInteractions, saveInteraction } from "../../services/SocialInteractionService";
+import { deleteInteraction, getInteractions, saveInteraction } from "../../services/SocialInteractionService";
 import * as actions from "./ActionTypes";
 import { CustomAction } from "./CustomAction";
 import { SocialInteractionPostRequest } from '../../services/messages/SocialInteractionPostRequest';
@@ -37,8 +37,6 @@ export function PostInteraction(interaction: CovidDataModel) {
     name: interaction.name
   }
 
-  console.log(request);
-
   return function (dispatch: Dispatch<Action>) {
     dispatch(PostInteractionRequest());
     saveInteraction(request)
@@ -61,3 +59,25 @@ function AddInteraction(interaction: CovidDataModel): CustomAction {
   }
 }
 
+export function RemoveInteraction(id: string) {
+  return function (dispatch: Dispatch<any>) {
+    dispatch(DeleteInteractionRequest());
+    deleteInteraction(id)
+      .then(r => dispatch(DeleteInteraction(id)))
+  }
+}
+
+function DeleteInteractionRequest(): Action {
+  return {
+    type: actions.REMOVE_INTERACTION_REQUEST
+  }
+}
+
+function DeleteInteraction(id: string): CustomAction {
+  return {
+    type: actions.REMOVE_INTERACTION,
+    payload: {
+      interactionId: id
+    }
+  }
+}

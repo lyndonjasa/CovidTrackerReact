@@ -26,6 +26,14 @@ const reducer: Reducer<SocialInteractionState, CustomAction> =
         loading: false,
         interactions: [...state.interactions, action.payload.interaction]
       }
+    case actions.REMOVE_INTERACTION_REQUEST:
+      return { ...state, loading: true }
+    case actions.REMOVE_INTERACTION:
+      return {
+        ...state,
+        loading: false,
+        interactions: state.interactions.filter(i => i.id !== action.payload.interactionId)
+      }
     default:
       return state;
   }

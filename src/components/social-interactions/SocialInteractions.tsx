@@ -6,9 +6,10 @@ import CovidDataTable from "../shared/CovidDataTable";
 import CovidDataAddButton from "../shared/CovidDataAddButton";
 import CovidDataForm from "../shared/CovidDataForm";
 import { CovidDataModel } from "../../models/CovidDataModel";
+import { TableContext } from "../../context/TableContext";
 
 const SocialInteractions = () => {
-  const { interactions, addInteraction } = useSocialInteraction();
+  const { interactions, addInteraction, deleteInteraction } = useSocialInteraction();
   const [groupedInteractions, setGroupedInteractions] = useState<GroupedCovidDataModel[]>([]);
 
   // pagination data
@@ -39,8 +40,20 @@ const SocialInteractions = () => {
 
   }, [interactions, page, take])
 
+  const nameDisplayText = 'Name';
+  const exposureDisplayText = "Is Social Distancing Observed?";
+  const updateDataCallback = (data: CovidDataModel) => {
+    console.log('update from social interaction', data);
+  }
+  const deleteDataCallback = (id: string) => {
+    deleteInteraction(id);
+  }
+
+  const contextValues = { nameDisplayText, exposureDisplayText, updateDataCallback, deleteDataCallback };
+
   return (
     <>
+      <TableContext.Provider value={contextValues}>
       <CovidDataTable 
         data={groupedInteractions} 
         pagination={{
@@ -49,13 +62,14 @@ const SocialInteractions = () => {
           page
         }}
         rowsPerPageCallback={onRowsPerPageChange}
-        pageCallback={onPageChange}></CovidDataTable>
+        pageCallback={onPageChange} />
+      </TableContext.Provider>
       <CovidDataAddButton addDisplayText="Add Interaction"
         onAddClick={() => setOpen(true)} />
       <CovidDataForm open={open}
         dialogTitle="Add Social Interaction"
         nameDisplayText="Name"
-        exposureDisplayText="Is Social Distancing Observed"
+        exposureDisplayText="Is Social Distancing Observed?"
         saveCallback={onInteractionAdd}
         handleClose={() => setOpen(false)} />
     </>
