@@ -89,7 +89,6 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
           <div className="form-container">
             <div className="form-control">
               <Autocomplete
-                id="free-solo-demo"
                 freeSolo
                 options={nameOptions}
                 renderInput={(params) => (

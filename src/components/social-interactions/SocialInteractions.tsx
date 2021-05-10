@@ -10,7 +10,7 @@ import { TableContext } from "../../context/TableContext";
 import CovidDataEmptyTable from "../shared/CovidDataEmptyTable";
 
 const SocialInteractions = () => {
-  const { interactions, addInteraction, deleteInteraction, updateInteraction, loading } = useSocialInteraction();
+  const { interactions, addInteraction, deleteInteraction, updateInteraction, loading, interactionOptions } = useSocialInteraction();
   const [groupedInteractions, setGroupedInteractions] = useState<GroupedCovidDataModel[]>([]);
 
   // pagination data
@@ -19,6 +19,8 @@ const SocialInteractions = () => {
   const [take, setTake] = useState(5);
 
   const [open, setOpen] = useState(false);
+  const [nameOptions, setNameOptions] = useState<string[]>([]);
+
   const onInteractionAdd = (interaction: CovidDataModel) => {
     addInteraction({ ...interaction, isExposed: !interaction.isExposed });
   }
@@ -38,8 +40,9 @@ const SocialInteractions = () => {
       .slice()
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(currentPage, currentPage + take)))
-
-  }, [interactions, page, take])
+    
+    setNameOptions(interactionOptions);
+  }, [interactions, page, take, interactionOptions])
 
   const dialogTitle = "Update Social Interaction";
   const nameDisplayText = 'Name';
@@ -56,12 +59,13 @@ const SocialInteractions = () => {
     nameDisplayText, 
     exposureDisplayText, 
     updateDataCallback, 
-    deleteDataCallback 
+    deleteDataCallback,
+    nameOptions
   };
 
   return (
     <>
-      <TableContext.Provider value={{...contextValues, mode: "interaction", nameOptions: []}}>
+      <TableContext.Provider value={{...contextValues, mode: "interaction"}}>
         {
           interactions.length > 0 &&
           <CovidDataTable 
@@ -92,7 +96,7 @@ const SocialInteractions = () => {
         exposureDisplayText="Is Social Distancing Observed?"
         saveCallback={onInteractionAdd}
         handleClose={() => setOpen(false)}
-        nameOptions={[]} />
+        nameOptions={nameOptions} />
     </>
   )
 }

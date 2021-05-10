@@ -56,7 +56,8 @@ const CovidDataRowGroupDetails: React.FC<Props> = (props: Props) => {
     nameDisplayText, 
     exposureDisplayText, 
     updateDataCallback, 
-    deleteDataCallback 
+    deleteDataCallback,
+    nameOptions
   } = useContext(TableContext);
 
   const onDelete = () => {
@@ -116,7 +117,7 @@ const CovidDataRowGroupDetails: React.FC<Props> = (props: Props) => {
         handleClose={() => setOpenUpdateDialog(false)}
         initialValue={mode === "interaction" ? {...detail, isExposed: !detail.isExposed} : detail}
         saveCallback={onUpdate}
-        nameOptions={[]} />
+        nameOptions={nameOptions} />
     </>
   )
 }

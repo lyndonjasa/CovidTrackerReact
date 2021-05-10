@@ -10,7 +10,7 @@ import CovidDataForm from "../shared/CovidDataForm";
 import CovidDataTable from "../shared/CovidDataTable";
 
 const VisitedPlaces = () => {
-  const { places, addPlace, loading, deletePlace, savePlace } = useVisitedPlace();
+  const { places, addPlace, loading, deletePlace, savePlace, placeOptions } = useVisitedPlace();
   const [groupedPlaces, setGroupedPlaces] = useState<GroupedCovidDataModel[]>([]);
 
   // pagination data
@@ -19,6 +19,8 @@ const VisitedPlaces = () => {
   const [take, setTake] = useState(5);
 
   const [open, setOpen] = useState(false);
+  const [nameOptions, setNameOptions] = useState<string[]>([]);
+
   const onPlaceAdd = (place: CovidDataModel) => {
     addPlace(place);
   }
@@ -38,8 +40,9 @@ const VisitedPlaces = () => {
       .slice()
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(currentPage, currentPage + take)))
-
-  }, [places, page, take])
+    
+    setNameOptions(placeOptions);
+  }, [places, page, take, placeOptions])
 
   const dialogTitle = "Update Visited Place";
   const nameDisplayText = 'Place';
@@ -56,12 +59,13 @@ const VisitedPlaces = () => {
     nameDisplayText, 
     exposureDisplayText, 
     updateDataCallback, 
-    deleteDataCallback 
+    deleteDataCallback,
+    nameOptions
   };
 
   return (
     <>
-      <TableContext.Provider value={{...contextValues, mode: "place", nameOptions: []}}>
+      <TableContext.Provider value={{...contextValues, mode: "place" }}>
       {
           places.length > 0 &&
           <CovidDataTable 
@@ -92,7 +96,7 @@ const VisitedPlaces = () => {
         exposureDisplayText="Is Crowded?"
         saveCallback={onPlaceAdd}
         handleClose={() => setOpen(false)}
-        nameOptions={[]} />
+        nameOptions={nameOptions} />
     </>
   )
 }
