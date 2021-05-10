@@ -1,0 +1,13 @@
+.floating-alert-div {
+    position: absolute;
+    z-index: 1;
+    top: 22px;
+    margin-left: 200px;
+    background-color: transparent;
+
+    .alerts {
+        width: 305px;
+        margin-bottom: 15px;
+        box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.75);
+    }
+}

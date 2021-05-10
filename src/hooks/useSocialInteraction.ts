@@ -5,6 +5,7 @@ import { FetchInteraction, PostInteraction, RemoveInteraction, SaveInteraction }
 import { useState } from 'react';
 import useDateRange from './useDateRange';
 import { SocialInteractionState } from '../store/SocialInteraction/SocialInteractionState';
+import moment from 'moment';
 
 const useSocialInteraction = () => {
   const state = useSelector<any>(
@@ -20,6 +21,7 @@ const useSocialInteraction = () => {
   const dispatch = useDispatch();
 
   const [interactions, setInteractions] = useState(totalInteractions);
+  const [hasInteractionExposure, setHasInteractionExposure] = useState(false);
   const { currentDateRange } = useDateRange();
 
   useEffect(() => {
@@ -27,6 +29,14 @@ const useSocialInteraction = () => {
                                                           new Date(i.date) <= currentDateRange.endDate);
 
     setInteractions(filteredInteractions);
+
+    const startDate = moment().subtract(13, 'days').startOf('day').toDate();
+    const endDate = moment().endOf('day').toDate();
+
+    const exposure = totalInteractions.some(i => new Date(i.date) >= startDate &&
+                                              new Date(i.date) <= endDate && 
+                                              i.isExposed)
+    setHasInteractionExposure(exposure);
   }, [totalInteractions, currentDateRange]);
   
   const fetchInteractions = () => {
@@ -51,7 +61,8 @@ const useSocialInteraction = () => {
     fetchInteractions,
     addInteraction,
     deleteInteraction,
-    updateInteraction
+    updateInteraction,
+    hasInteractionExposure
   }
 }
 

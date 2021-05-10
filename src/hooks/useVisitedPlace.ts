@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import useDateRange from './useDateRange';
 import { FetchPlace, PostPlace, RemovePlace, SavePlace } from '../store/VisitedPlaces/VisitedPlaceActions';
 import { CovidDataModel } from '../models/CovidDataModel';
+import moment from 'moment';
 
 const useVisitedPlace = () => {
   const state = useSelector<any>(
@@ -19,13 +20,22 @@ const useVisitedPlace = () => {
   const dispatch = useDispatch();
 
   const [places, setPlaces] = useState(totalPlaces);
+  const [hasPlaceExposure, setHasPlaceExposure] = useState(false);
+
   const { currentDateRange } = useDateRange();
 
   useEffect(() => {
     const filteredPlaces = totalPlaces.filter(i => new Date(i.date) >= currentDateRange.startDate &&
                                               new Date(i.date) <= currentDateRange.endDate);
-
     setPlaces(filteredPlaces);
+
+    const startDate = moment().subtract(13, 'days').startOf('day').toDate();
+    const endDate = moment().endOf('day').toDate();
+
+    const exposure = totalPlaces.some(i => new Date(i.date) >= startDate &&
+                                              new Date(i.date) <= endDate && 
+                                              i.isExposed)
+    setHasPlaceExposure(exposure);
   }, [totalPlaces, currentDateRange]);
 
   const fetchPlaces = () => {
@@ -50,7 +60,8 @@ const useVisitedPlace = () => {
     fetchPlaces,
     addPlace,
     deletePlace,
-    savePlace
+    savePlace,
+    hasPlaceExposure
   }
 }
 
