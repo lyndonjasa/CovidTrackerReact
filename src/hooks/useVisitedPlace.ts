@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import useDateRange from './useDateRange';
 import { FetchPlace, PostPlace } from '../store/VisitedPlaces/VisitedPlaceActions';
 import { CovidDataModel } from '../models/CovidDataModel';
-import { OverviewCovidDataModel } from '../models/OverviewCovidDataModel';
-import { getDivider, summarize } from '../shared/overview-data-helper';
 
 const useVisitedPlace = () => {
   const state = useSelector<any>(
@@ -21,7 +19,6 @@ const useVisitedPlace = () => {
   const dispatch = useDispatch();
 
   const [places, setPlaces] = useState(totalPlaces);
-  const [placesOverview, setPlacesOverview] = useState<OverviewCovidDataModel[]>([]);
   const { currentDateRange } = useDateRange();
 
   useEffect(() => {
@@ -29,7 +26,6 @@ const useVisitedPlace = () => {
                                               new Date(i.date) <= currentDateRange.endDate);
 
     setPlaces(filteredPlaces);
-    setPlacesOverview(summarize(filteredPlaces, getDivider(currentDateRange.range), currentDateRange.endDate));
   }, [totalPlaces, currentDateRange]);
 
   const fetchPlaces = () => {
@@ -42,7 +38,6 @@ const useVisitedPlace = () => {
 
   return {
     places,
-    placesOverview,
     loading,
     fetchPlaces,
     addPlace

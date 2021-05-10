@@ -40,7 +40,7 @@ const CovidDataTable: React.FC<Props> = (props: Props) => {
   return (
     <>
       <Scrollbars
-          style={{ height: '350px' }}
+          style={{ height: '370px' }}
           autoHide>
         <Table>
           <TableBody>

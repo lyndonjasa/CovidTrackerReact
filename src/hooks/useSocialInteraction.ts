@@ -1,5 +1,3 @@
-import { summarize, getDivider } from './../shared/overview-data-helper';
-import { OverviewCovidDataModel } from './../models/OverviewCovidDataModel';
 import { CovidDataModel } from './../models/CovidDataModel';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +20,6 @@ const useSocialInteraction = () => {
   const dispatch = useDispatch();
 
   const [interactions, setInteractions] = useState(totalInteractions);
-  const [interactionsOverview, setInteractionsOverview] = useState<OverviewCovidDataModel[]>([]);
   const { currentDateRange } = useDateRange();
 
   useEffect(() => {
@@ -30,7 +27,6 @@ const useSocialInteraction = () => {
                                                           new Date(i.date) <= currentDateRange.endDate);
 
     setInteractions(filteredInteractions);
-    setInteractionsOverview(summarize(filteredInteractions, getDivider(currentDateRange.range), currentDateRange.endDate));
   }, [totalInteractions, currentDateRange]);
   
   const fetchInteractions = () => {
@@ -43,7 +39,6 @@ const useSocialInteraction = () => {
 
   return {
     interactions,
-    interactionsOverview,
     loading,
     fetchInteractions,
     addInteraction

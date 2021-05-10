@@ -6,22 +6,25 @@ import ViewModeButton from "./ViewModeButton";
 import './Overview.scss';
 import OverviewChart from "./OverviewChart";
 import { OverviewCovidDataModel } from "../../models/OverviewCovidDataModel";
+import { getDivider, summarize } from "../../shared/overview-data-helper";
+import useDateRange from "../../hooks/useDateRange";
 
 type ViewMode = "interactions" | "places";
 
 const Overview = () => {
   const [mode, setMode] = useState<ViewMode>("interactions")
-  const { interactions, interactionsOverview } = useSocialInteraction();
-  const { places, placesOverview } = useVisitedPlace();
+  const { interactions } = useSocialInteraction();
+  const { places } = useVisitedPlace();
+  const { currentDateRange } = useDateRange();
   const [overview, setOverview] = useState<OverviewCovidDataModel[]>([]);
   
   useEffect(() => {
     if (mode === "interactions") {
-      setOverview(interactionsOverview);
+      setOverview(summarize(interactions, getDivider(currentDateRange.range), currentDateRange.endDate));
     } else {
-      setOverview(placesOverview);
+      setOverview(summarize(places, getDivider(currentDateRange.range), currentDateRange.endDate));
     }
-  }, [interactionsOverview, placesOverview, mode])
+  }, [interactions, places, mode, currentDateRange])
 
   return (
     <>
