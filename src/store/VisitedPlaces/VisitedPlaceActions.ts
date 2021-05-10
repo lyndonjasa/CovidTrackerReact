@@ -4,6 +4,7 @@ import { getPlaces, savePlace } from "../../services/VisitedPlacesService";
 import { CustomAction } from './CustomAction';
 import * as actions from './ActionTypes';
 import { VisitedPlacePostRequest } from '../../services/messages/VisitedPlacePostRequest';
+import moment from 'moment';
 
 export function FetchPlace() {
   return function (dispatch: Dispatch<Action>) {
@@ -30,7 +31,7 @@ function FetchPlaces(places: CovidDataModel[]): CustomAction {
 
 export function PostPlace(place: CovidDataModel) {
   const request: VisitedPlacePostRequest = {
-    date: place.date,
+    date: moment(place.date).startOf('day').toDate(),
     hours: place.hours,
     isCrowded: place.isExposed,
     place: place.name
