@@ -3,8 +3,9 @@ import { SocialInteractionResponse } from './messages/SocialInteractionResponse'
 import axios, { AxiosResponse } from 'axios';
 import { CovidDataModel } from './../models/CovidDataModel';
 import { plainToClass } from 'class-transformer';
+import config from '../config';
 
-const url = 'http://localhost:5000/api/social-interactions'; // put in config
+const url = `${config.apiUrl}/api/social-interactions`;
 
 export const getInteractions = async (): Promise<CovidDataModel[]> => {
   const promise: AxiosResponse<any[]> = await axios.get(url);

@@ -3,8 +3,9 @@ import { VisitedPlacesResponse } from './messages/VisitedPlacesResponse';
 import axios, { AxiosResponse } from 'axios';
 import { CovidDataModel } from './../models/CovidDataModel';
 import { plainToClass } from 'class-transformer';
+import config from '../config';
 
-const url = 'http://localhost:5000/api/visited-places'; // place this in config file
+const url = `${config.apiUrl}/api/visited-places`;
 
 export const getPlaces = async (): Promise<CovidDataModel[]> => {
   const promise: AxiosResponse<any[]> = await axios.get(url);
