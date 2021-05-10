@@ -15,7 +15,7 @@ import NotificationAlerts from "./NotificationAlerts";
 import ResetDataDialog from "./ResetDataDialog";
 
 const Header = () => {
-  const [navigationValue, setNavigationValue] = useState(0);
+  const [navigationValue, setNavigationValue] = useState<number | undefined>(0);
   const [openAlerts, setOpenAlerts] = useState(false);
   const [openResetDialog, setOpenResetDialog] = useState(false);
   const history = useHistory();
@@ -36,14 +36,16 @@ const Header = () => {
   }, [hasInteractionExposure, hasPlaceExposure])
 
   useEffect(() => {
-    if (pathname === '/interactions') {
+    if (pathname === '/') {
+      setNavigationValue(0);
+    } else if (pathname === '/interactions') {
       setNavigationValue(1)
     } else if (pathname === '/places') {
       setNavigationValue(2)
     } else if (pathname === '/overview') {
       setNavigationValue(3)
     } else {
-      setNavigationValue(0);
+      setNavigationValue(undefined);
     }
   }, [pathname])
 
