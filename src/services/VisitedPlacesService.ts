@@ -26,3 +26,16 @@ export const savePlace = async (request: VisitedPlacePostRequest) => {
 
   return new CovidDataModel(response._id, response.place, response.date, response.hours, response.isCrowded);
 }
+
+export const deletePlace = async (id: string): Promise<boolean> => {
+  await axios.delete(`${url}/${id}`);
+  
+  return true;
+}
+
+export const putPlace = async (request: VisitedPlacePostRequest, id: string): Promise<CovidDataModel> => {
+  const promise: AxiosResponse<any> = await axios.put(`${url}/${id}`, request);
+  const response: VisitedPlacesResponse = plainToClass(VisitedPlacesResponse, promise.data);
+
+  return new CovidDataModel(response._id, response.place, response.date, response.hours, response.isCrowded);
+}

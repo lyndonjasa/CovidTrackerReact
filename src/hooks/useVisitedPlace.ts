@@ -2,7 +2,7 @@ import { VisitedPlaceState } from './../store/VisitedPlaces/VisitedPlaceState';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
 import useDateRange from './useDateRange';
-import { FetchPlace, PostPlace } from '../store/VisitedPlaces/VisitedPlaceActions';
+import { FetchPlace, PostPlace, RemovePlace, SavePlace } from '../store/VisitedPlaces/VisitedPlaceActions';
 import { CovidDataModel } from '../models/CovidDataModel';
 
 const useVisitedPlace = () => {
@@ -36,11 +36,21 @@ const useVisitedPlace = () => {
     dispatch(PostPlace(data))
   }
 
+  const deletePlace = (id: string) => {
+    dispatch(RemovePlace(id))
+  }
+
+  const savePlace = (data: CovidDataModel) => {
+    dispatch(SavePlace(data));
+  }
+
   return {
     places,
     loading,
     fetchPlaces,
-    addPlace
+    addPlace,
+    deletePlace,
+    savePlace
   }
 }
 

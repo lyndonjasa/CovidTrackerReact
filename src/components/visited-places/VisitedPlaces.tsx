@@ -10,7 +10,7 @@ import CovidDataForm from "../shared/CovidDataForm";
 import CovidDataTable from "../shared/CovidDataTable";
 
 const VisitedPlaces = () => {
-  const { places, addPlace, loading } = useVisitedPlace();
+  const { places, addPlace, loading, deletePlace, savePlace } = useVisitedPlace();
   const [groupedPlaces, setGroupedPlaces] = useState<GroupedCovidDataModel[]>([]);
 
   // pagination data
@@ -45,10 +45,10 @@ const VisitedPlaces = () => {
   const nameDisplayText = 'Place';
   const exposureDisplayText = "Is Crowded?";
   const updateDataCallback = (data: CovidDataModel) => {
-    
+    savePlace(data);
   }
   const deleteDataCallback = (id: string) => {
-    
+    deletePlace(id);
   }
 
   const contextValues = {
