@@ -3,7 +3,7 @@ const environment = {
     apiUrl: "http://localhost:5000"
   },
   production: {
-    apiUrl: process.env.API_URL
+    apiUrl: "https://don-covid-tracker-api.herokuapp.com"
   }
 }
 
