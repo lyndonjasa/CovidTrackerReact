@@ -3,6 +3,7 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { CovidDataModel } from "../../models/CovidDataModel";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import './CovidDataForm.scss';
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
   exposureDisplayText: string;
   saveCallback: (data: CovidDataModel) => void;
   initialValue?: CovidDataModel;
+  nameOptions: string[];
 }
 
 const CovidDataForm: React.FC<Props> = (props: Props) => {
@@ -23,7 +25,8 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
     saveCallback, 
     nameDisplayText, 
     exposureDisplayText,
-    initialValue
+    initialValue,
+    nameOptions
   } = props;
 
   const [name, setName] = useState('');
@@ -85,14 +88,23 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
         <DialogContent>
           <div className="form-container">
             <div className="form-control">
-              <TextField
-                error={nameError}
-                helperText={nameError ? `${nameDisplayText} is required` : ''}
-                value={name}
-                label={nameDisplayText}
-                type="text"
-                onChange={handleChangeName}
+              <Autocomplete
+                id="free-solo-demo"
+                freeSolo
+                options={nameOptions}
+                renderInput={(params) => (
+                  <TextField
+                    { ...params }
+                    error={nameError}
+                    helperText={nameError ? `${nameDisplayText} is required` : ''}
+                    value={name}
+                    label={nameDisplayText}
+                    type="text"
+                    onChange={handleChangeName}
+                  />
+                )}
               />
+              
             </div>
             <div className="form-control">
               <KeyboardDatePicker

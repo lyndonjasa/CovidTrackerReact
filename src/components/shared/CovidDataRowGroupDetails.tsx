@@ -115,7 +115,8 @@ const CovidDataRowGroupDetails: React.FC<Props> = (props: Props) => {
         exposureDisplayText={exposureDisplayText}
         handleClose={() => setOpenUpdateDialog(false)}
         initialValue={mode === "interaction" ? {...detail, isExposed: !detail.isExposed} : detail}
-        saveCallback={onUpdate} />
+        saveCallback={onUpdate}
+        nameOptions={[]} />
     </>
   )
 }

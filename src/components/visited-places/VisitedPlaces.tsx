@@ -61,7 +61,7 @@ const VisitedPlaces = () => {
 
   return (
     <>
-      <TableContext.Provider value={{...contextValues, mode: "place"}}>
+      <TableContext.Provider value={{...contextValues, mode: "place", nameOptions: []}}>
       {
           places.length > 0 &&
           <CovidDataTable 
@@ -91,7 +91,8 @@ const VisitedPlaces = () => {
         nameDisplayText="Place"
         exposureDisplayText="Is Crowded?"
         saveCallback={onPlaceAdd}
-        handleClose={() => setOpen(false)} />
+        handleClose={() => setOpen(false)}
+        nameOptions={[]} />
     </>
   )
 }

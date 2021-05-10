@@ -8,6 +8,7 @@ type TableContextProps = {
   exposureDisplayText: string;
   deleteDataCallback: any;
   updateDataCallback: any;
+  nameOptions: string[];
 }
 
 export const TableContext = React.createContext<TableContextProps>(
@@ -17,7 +18,8 @@ export const TableContext = React.createContext<TableContextProps>(
     nameDisplayText: '',
     exposureDisplayText: '',
     deleteDataCallback: (id: string) => {},
-    updateDataCallback: (data: CovidDataModel) => {}
+    updateDataCallback: (data: CovidDataModel) => {},
+    nameOptions: []
   }
 ); 
 

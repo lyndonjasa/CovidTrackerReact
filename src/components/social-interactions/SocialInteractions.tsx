@@ -61,7 +61,7 @@ const SocialInteractions = () => {
 
   return (
     <>
-      <TableContext.Provider value={{...contextValues, mode: "interaction"}}>
+      <TableContext.Provider value={{...contextValues, mode: "interaction", nameOptions: []}}>
         {
           interactions.length > 0 &&
           <CovidDataTable 
@@ -91,7 +91,8 @@ const SocialInteractions = () => {
         nameDisplayText="Name"
         exposureDisplayText="Is Social Distancing Observed?"
         saveCallback={onInteractionAdd}
-        handleClose={() => setOpen(false)} />
+        handleClose={() => setOpen(false)}
+        nameOptions={[]} />
     </>
   )
 }

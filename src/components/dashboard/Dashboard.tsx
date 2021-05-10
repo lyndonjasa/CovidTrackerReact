@@ -28,10 +28,11 @@ const Dashboard = () => {
     nameDisplayText: 'Name',
     exposureDisplayText: 'Is Social Distancing Observed?'
   });
-
-  const { interactions, addInteraction } = useSocialInteraction();
-  const { places, addPlace } = useVisitedPlace();
+  
+  const { interactions, addInteraction, interactionOptions } = useSocialInteraction();
+  const { places, addPlace, placeOptions } = useVisitedPlace();
   const { currentDateRange } = useDateRange();
+  const [options, setOptions] = useState<string[]>([]);
 
   const [summary, setSummary] = useState<SummarizedCovidDataModel[]>([
     { displayText: 'Not Exposed', displayValue: 0 },
@@ -75,6 +76,7 @@ const Dashboard = () => {
       nameDisplayText: 'Name',
       exposureDisplayText: 'Is Social Distancing Observed?'
     });
+    setOptions(interactionOptions);
     setOpen(true);
   }
 
@@ -85,6 +87,7 @@ const Dashboard = () => {
       nameDisplayText: 'Place',
       exposureDisplayText: 'Is the Place Crowded?'
     });
+    setOptions(placeOptions);
     setOpen(true);
   }
 
@@ -136,7 +139,8 @@ const Dashboard = () => {
           nameDisplayText={formDetails.nameDisplayText}
           exposureDisplayText={formDetails.exposureDisplayText}
           handleClose={() => setOpen(false)}
-          saveCallback={handleSave}>
+          saveCallback={handleSave}
+          nameOptions={options}>
         </CovidDataForm>
       </div>
     </>

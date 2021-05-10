@@ -21,7 +21,7 @@ const useVisitedPlace = () => {
 
   const [places, setPlaces] = useState(totalPlaces);
   const [hasPlaceExposure, setHasPlaceExposure] = useState(false);
-
+  const [placeOptions, setPlaceOptions] = useState<string[]>([]);
   const { currentDateRange } = useDateRange();
 
   useEffect(() => {
@@ -36,6 +36,7 @@ const useVisitedPlace = () => {
                                               new Date(i.date) <= endDate && 
                                               i.isExposed)
     setHasPlaceExposure(exposure);
+    setPlaceOptions(totalPlaces.map(p => p.name));
   }, [totalPlaces, currentDateRange]);
 
   const fetchPlaces = () => {
@@ -61,7 +62,8 @@ const useVisitedPlace = () => {
     addPlace,
     deletePlace,
     savePlace,
-    hasPlaceExposure
+    hasPlaceExposure,
+    placeOptions
   }
 }
 

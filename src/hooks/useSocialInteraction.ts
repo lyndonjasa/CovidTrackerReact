@@ -22,6 +22,7 @@ const useSocialInteraction = () => {
 
   const [interactions, setInteractions] = useState(totalInteractions);
   const [hasInteractionExposure, setHasInteractionExposure] = useState(false);
+  const [interactionOptions, setInteractionOptions] = useState<string[]>([]);
   const { currentDateRange } = useDateRange();
 
   useEffect(() => {
@@ -37,6 +38,8 @@ const useSocialInteraction = () => {
                                               new Date(i.date) <= endDate && 
                                               i.isExposed)
     setHasInteractionExposure(exposure);
+
+    setInteractionOptions(totalInteractions.map(i => i.name));
   }, [totalInteractions, currentDateRange]);
   
   const fetchInteractions = () => {
@@ -62,7 +65,8 @@ const useSocialInteraction = () => {
     addInteraction,
     deleteInteraction,
     updateInteraction,
-    hasInteractionExposure
+    hasInteractionExposure,
+    interactionOptions
   }
 }
 
