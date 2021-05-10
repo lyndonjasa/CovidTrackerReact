@@ -2,6 +2,8 @@ import { CovidDataModel } from './../models/CovidDataModel';
 import React from 'react';
 
 type TableContextProps = {
+  mode: "interaction" | "place"
+  dialogTitle: string;
   nameDisplayText: string;
   exposureDisplayText: string;
   deleteDataCallback: any;
@@ -10,6 +12,8 @@ type TableContextProps = {
 
 export const TableContext = React.createContext<TableContextProps>(
   {
+    mode: "interaction",
+    dialogTitle: '',
     nameDisplayText: '',
     exposureDisplayText: '',
     deleteDataCallback: (id: string) => {},

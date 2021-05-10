@@ -9,7 +9,7 @@ import { CovidDataModel } from "../../models/CovidDataModel";
 import { TableContext } from "../../context/TableContext";
 
 const SocialInteractions = () => {
-  const { interactions, addInteraction, deleteInteraction } = useSocialInteraction();
+  const { interactions, addInteraction, deleteInteraction, updateInteraction } = useSocialInteraction();
   const [groupedInteractions, setGroupedInteractions] = useState<GroupedCovidDataModel[]>([]);
 
   // pagination data
@@ -40,20 +40,27 @@ const SocialInteractions = () => {
 
   }, [interactions, page, take])
 
+  const dialogTitle = "Update Social Interaction";
   const nameDisplayText = 'Name';
   const exposureDisplayText = "Is Social Distancing Observed?";
   const updateDataCallback = (data: CovidDataModel) => {
-    console.log('update from social interaction', data);
+    updateInteraction({...data, isExposed: !data.isExposed});
   }
   const deleteDataCallback = (id: string) => {
     deleteInteraction(id);
   }
 
-  const contextValues = { nameDisplayText, exposureDisplayText, updateDataCallback, deleteDataCallback };
+  const contextValues = {
+    dialogTitle, 
+    nameDisplayText, 
+    exposureDisplayText, 
+    updateDataCallback, 
+    deleteDataCallback 
+  };
 
   return (
     <>
-      <TableContext.Provider value={contextValues}>
+      <TableContext.Provider value={{...contextValues, mode: "interaction"}}>
       <CovidDataTable 
         data={groupedInteractions} 
         pagination={{

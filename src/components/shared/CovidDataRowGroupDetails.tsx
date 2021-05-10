@@ -6,6 +6,7 @@ import './CovidDataRowGroupDetails.scss';
 import { CovidDataModel } from '../../models/CovidDataModel';
 import CovidDataDeleteDialog from './CovidDataDeleteDialog';
 import { TableContext } from '../../context/TableContext';
+import CovidDataForm from './CovidDataForm';
 
 const useActionStyles = makeStyles({
   root: {
@@ -49,10 +50,24 @@ const CovidDataRowGroupDetails: React.FC<Props> = (props: Props) => {
     setOpenDeleteDialog(false);
   }
 
-  const { nameDisplayText, exposureDisplayText, updateDataCallback, deleteDataCallback } = useContext(TableContext);
+  const { 
+    mode, 
+    dialogTitle, 
+    nameDisplayText, 
+    exposureDisplayText, 
+    updateDataCallback, 
+    deleteDataCallback 
+  } = useContext(TableContext);
+
   const onDelete = () => {
     deleteDataCallback(detail.id);
     setOpenDeleteDialog(false);
+  }
+
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+  const onUpdate = (data: CovidDataModel) => {
+    updateDataCallback({...data, id: detail.id});
+    setOpenUpdateDialog(false);
   }
 
   return (
@@ -80,7 +95,8 @@ const CovidDataRowGroupDetails: React.FC<Props> = (props: Props) => {
         </TableCell>
         <TableCell style={actionStyles}>
           <div className="detail-actions">
-            <Fab color="default" size="small" className={actionClasses.root}>
+            <Fab color="default" size="small" className={actionClasses.root}
+              onClick={() => setOpenUpdateDialog(true)}>
               <EditIcon />
             </Fab>
             <Fab color="default" size="small" className={actionClasses.root}
@@ -93,6 +109,13 @@ const CovidDataRowGroupDetails: React.FC<Props> = (props: Props) => {
       <CovidDataDeleteDialog open={openDeleteDialog}
         handleClose={onDeleteDialogClose}
         deleteCallback={onDelete} />
+      <CovidDataForm dialogTitle={dialogTitle}
+        open={openUpdateDialog}
+        nameDisplayText={nameDisplayText}
+        exposureDisplayText={exposureDisplayText}
+        handleClose={() => setOpenUpdateDialog(false)}
+        initialValue={mode === "interaction" ? {...detail, isExposed: !detail.isExposed} : detail}
+        saveCallback={onUpdate} />
     </>
   )
 }

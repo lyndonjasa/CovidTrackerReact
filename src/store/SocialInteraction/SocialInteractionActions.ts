@@ -1,6 +1,7 @@
+import { putInteraction } from './../../services/SocialInteractionService';
 import { CovidDataModel } from './../../models/CovidDataModel';
 import { Dispatch, Action } from "redux";
-import { deleteInteraction, getInteractions, saveInteraction } from "../../services/SocialInteractionService";
+import { deleteInteraction, getInteractions, postInteraction } from "../../services/SocialInteractionService";
 import * as actions from "./ActionTypes";
 import { CustomAction } from "./CustomAction";
 import { SocialInteractionPostRequest } from '../../services/messages/SocialInteractionPostRequest';
@@ -39,7 +40,7 @@ export function PostInteraction(interaction: CovidDataModel) {
 
   return function (dispatch: Dispatch<Action>) {
     dispatch(PostInteractionRequest());
-    saveInteraction(request)
+    postInteraction(request)
       .then(r => dispatch(AddInteraction(r)));
   }
 }
@@ -78,6 +79,36 @@ function DeleteInteraction(id: string): CustomAction {
     type: actions.REMOVE_INTERACTION,
     payload: {
       interactionId: id
+    }
+  }
+}
+
+export function SaveInteraction(interaction: CovidDataModel) {
+  const request: SocialInteractionPostRequest = {
+    date: moment(interaction.date).startOf('day').toDate(),
+    hours: interaction.hours,
+    isSocialDistancing: !interaction.isExposed,
+    name: interaction.name
+  }
+
+  return function (dispatch: Dispatch<any>) {
+    dispatch(UpdateInteractionRequest());
+    putInteraction(request, interaction.id)
+      .then(r => dispatch(UpdateInteraction(r)))
+  }
+}
+
+function UpdateInteractionRequest(): Action {
+  return {
+    type: actions.UPDATE_INTERACTION_REQUEST
+  }
+}
+
+function UpdateInteraction(interaction: CovidDataModel): CustomAction {
+  return {
+    type: actions.UPDATE_INTERACTION,
+    payload: {
+      interaction
     }
   }
 }
