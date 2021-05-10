@@ -10,6 +10,9 @@ const UPDATE_INTERACTION = 'Update Social Interaction';
 const REMOVE_INTERACTION_REQUEST = 'Remove Interaction Request';
 const REMOVE_INTERACTION = 'Remove Social Interaction';
 
+const RESET_DATA_REQUEST = 'Reset Interaction Data Request';
+const RESET_DATA = 'Reset Interaction';
+
 export {
   FETCH_INTERACTIONS_REQUEST,
   FETCH_INTERACTIONS,
@@ -18,5 +21,7 @@ export {
   UPDATE_INTERACTION_REQUEST,
   UPDATE_INTERACTION,
   REMOVE_INTERACTION_REQUEST,
-  REMOVE_INTERACTION
+  REMOVE_INTERACTION,
+  RESET_DATA_REQUEST,
+  RESET_DATA
 };

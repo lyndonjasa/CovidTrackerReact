@@ -112,3 +112,15 @@ function UpdateInteraction(interaction: CovidDataModel): CustomAction {
     }
   }
 }
+
+export function ResetInteractionRequest(): Action {
+  return {
+    type: actions.RESET_DATA_REQUEST
+  }
+}
+
+export function ResetInteractoin(): Action {
+  return {
+    type: actions.RESET_DATA
+  }
+}

@@ -50,6 +50,10 @@ const reducer: Reducer<SocialInteractionState, CustomAction> =
           } : { ...i }
         )
       }
+    case actions.RESET_DATA_REQUEST:
+      return { ...state, loading: true }
+    case actions.RESET_DATA:
+      return { ...state, loading: false, interactions: [] }
     default:
       return state;
   }

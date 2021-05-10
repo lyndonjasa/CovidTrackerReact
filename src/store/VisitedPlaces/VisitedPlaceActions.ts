@@ -111,3 +111,15 @@ function UpdatePlace(place: CovidDataModel): CustomAction {
     }
   }
 }
+
+export function ResetPlacesRequest(): Action {
+  return {
+    type: actions.RESET_DATA_REQUEST
+  }
+}
+
+export function ResetPlaces(): Action {
+  return {
+    type: actions.RESET_DATA
+  }
+}

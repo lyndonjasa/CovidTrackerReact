@@ -10,6 +10,9 @@ const UPDATE_PLACE = 'Update Social PLACE';
 const REMOVE_PLACE_REQUEST = 'Remove PLACE Request';
 const REMOVE_PLACE = 'Remove Social PLACE';
 
+const RESET_DATA_REQUEST = 'Reset Places Request';
+const RESET_DATA = 'Reset Places';
+
 export {
   FETCH_PLACES_REQUEST,
   FETCH_PLACES,
@@ -18,5 +21,7 @@ export {
   UPDATE_PLACE_REQUEST,
   UPDATE_PLACE,
   REMOVE_PLACE_REQUEST,
-  REMOVE_PLACE
+  REMOVE_PLACE,
+  RESET_DATA_REQUEST,
+  RESET_DATA
 };

@@ -12,10 +12,12 @@ import useSocialInteraction from "../../hooks/useSocialInteraction";
 import useVisitedPlace from "../../hooks/useVisitedPlace";
 import './Header.scss';
 import NotificationAlerts from "./NotificationAlerts";
+import ResetDataDialog from "./ResetDataDialog";
 
 const Header = () => {
   const [navigationValue, setNavigationValue] = useState(0);
   const [openAlerts, setOpenAlerts] = useState(false);
+  const [openResetDialog, setOpenResetDialog] = useState(false);
   const history = useHistory();
   const { pathname } = useLocation();
   const { loading: interactionsLoading, hasInteractionExposure } = useSocialInteraction();
@@ -70,7 +72,8 @@ const Header = () => {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton color="inherit" className="gear-icon">
+            <IconButton color="inherit" className="gear-icon"
+              onClick={() => setOpenResetDialog(true)}>
               <SettingsBackupRestoreIcon />
             </IconButton>
           </div>
@@ -94,6 +97,7 @@ const Header = () => {
         <LinearProgress className={interactionsLoading || placesLoading ? '' : classes.indeterminate} />
       </div>
       <NotificationAlerts open={openAlerts} />
+      <ResetDataDialog open={openResetDialog} handleClose={() => setOpenResetDialog(false)} />
     </>
   )
 };

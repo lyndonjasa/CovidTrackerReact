@@ -50,6 +50,10 @@ const reducer: Reducer<VisitedPlaceState, CustomAction> =
             } : { ...i }
           )
         }
+      case actions.RESET_DATA_REQUEST:
+        return { ...state, loading: true }
+      case actions.RESET_DATA:
+        return { ...state, loading: false, places: [] }
     default:
       return state;
   }
