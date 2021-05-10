@@ -3,7 +3,7 @@ const environment = {
     apiUrl: "http://localhost:5000"
   },
   production: {
-    apiUrl: "https://monster-slayer-api.herokuapp.com"
+    apiUrl: process.env.API_URL
   }
 }
 
