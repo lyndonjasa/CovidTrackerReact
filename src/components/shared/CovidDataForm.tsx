@@ -3,7 +3,7 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { CovidDataModel } from "../../models/CovidDataModel";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import './CovidDataForm.scss';
 
 type Props = {
@@ -81,6 +81,11 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
     }
   }, [open, initialValue])
 
+  const filterOptions = createFilterOptions({
+    matchFrom: 'start',
+    limit: 5
+  });
+
   return (
     <>
       <Dialog open={open} onClose={handleClose} disableBackdropClick={true} scroll="body" >
@@ -91,6 +96,7 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
               <Autocomplete
                 freeSolo
                 options={nameOptions}
+                filterOptions={filterOptions}
                 renderInput={(params) => (
                   <TextField
                     { ...params }
