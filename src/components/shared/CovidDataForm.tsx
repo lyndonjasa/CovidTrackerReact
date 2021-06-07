@@ -97,12 +97,12 @@ const CovidDataForm: React.FC<Props> = (props: Props) => {
                 freeSolo
                 options={nameOptions}
                 filterOptions={filterOptions}
+                inputValue={name}
                 renderInput={(params) => (
                   <TextField
                     { ...params }
                     error={nameError}
                     helperText={nameError ? `${nameDisplayText} is required` : ''}
-                    value={name}
                     label={nameDisplayText}
                     type="text"
                     onChange={handleChangeName}
